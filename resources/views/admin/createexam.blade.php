@@ -119,103 +119,53 @@
                             @csrf
                             <input type="hidden" name="type" value="question">
                             <input type="hidden" name="question_id" id="question_id" value="">
-                            <div class="card-body">
-                                <div class="form-group row">
-                                    <label for="totalquestion" class="col-sm-4 col-form-label">Total Questions</label>
-                                    <div class="col-sm-8">
-                                        <input type="number"
-                                            onkeyup="if(!this.checkValidity()){this.value='1';}; if(!this.value){this.value='1';};"
-                                            class="form-control" id="totalquestion" name="totalquestion"
-                                            placeholder="Total Questions" min="1" value="1">
-                                    </div>
+                            <div class="card card-info">
+                                <div class="card-body">
+                                    <button type="button" class="btn btn-info float-right" id="addrow">Add Question
+                                        &nbsp; <span><i class="fa fa-plus" aria-hidden="true"></i></span></button>
+                                    <table class="table table-md" id="question_table">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Question</th>
+                                                <th>Option A</th>
+                                                <th>Option B</th>
+                                                <th>Option C</th>
+                                                <th>Option D</th>
+                                                <th>Correct Option</th>
+                                                <th>&nbsp</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>1</td>
+                                                <td><textarea class="form-control" name="qn_name_1" id="qn_name"
+                                                        placeholder="Question" rows="1"></textarea></td>
+                                                <td><textarea class="form-control" name="opt_a_1" id="opt_a"
+                                                        placeholder="Option A" rows="1"></textarea></td>
+                                                <td><textarea class="form-control" name="opt_b_1" id="opt_b"
+                                                        placeholder="Option B" rows="1"></textarea></td>
+                                                <td><textarea class="form-control" name="opt_c_1" id="opt_c"
+                                                        placeholder="Option C" rows="1"></textarea></td>
+                                                <td><textarea class="form-control" name="opt_d_1" id="opt_d"
+                                                        placeholder="Option D" rows="1"></textarea></td>
+                                                <td><select class="form-control" name="opt_correct_1" id="opt_correct"
+                                                        data-parsley-required="true">
+                                                        <option value="">Select Option</option>
+                                                        <option value="a">Option A</option>
+                                                        <option value="b">Option B</option>
+                                                        <option value="c">Option C</option>
+                                                        <option value="d">Option D</option>
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
-                                <div id="qndiv">
-                                    <div class="form-group row">
-                                        <label for="qn_name" class="col-sm-4 col-form-label">Question</label>
-                                        <div class="col-sm-8">
-                                            <textarea class="form-control" name="qn_name" id="qn_name"
-                                                placeholder="Question" rows="1"></textarea>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label for="opt_a" class="col-sm-4 col-form-label">Option A</label>
-                                        <div class="col-sm-8">
-                                            <textarea class="form-control" name="opt_a" id="opt_a"
-                                                placeholder="Option A" rows="1"></textarea>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label for="opt_b" class="col-sm-4 col-form-label">Option B</label>
-                                        <div class="col-sm-8">
-                                            <textarea class="form-control" name="opt_b" id="opt_b"
-                                                placeholder="Option B" rows="1"></textarea>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label for="opt_c" class="col-sm-4 col-form-label">Option C</label>
-                                        <div class="col-sm-8">
-                                            <textarea class="form-control" name="opt_c" id="opt_c"
-                                                placeholder="Option C" rows="1"></textarea>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label for="opt_d" class="col-sm-4 col-form-label">Option D</label>
-                                        <div class="col-sm-8">
-                                            <textarea class="form-control" name="opt_d" id="opt_d"
-                                                placeholder="Option D" rows="1"></textarea>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label for="opt_correct" class="col-sm-4 col-form-label">Correct option</label>
-                                        <div class="col-sm-8">
-                                            <select class="form-control" name="opt_correct" id="opt_correct"
-                                                data-parsley-required="true">
-                                                <option value="">Select Option</option>
-                                                <option value="a">Option A</option>
-                                                <option value="b">Option B</option>
-                                                <option value="c">Option C</option>
-                                                <option value="d">Option D</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card-footer">
-                                <button type="reset" class="btn btn-secondary">Clear</button>
-                                <button type="submit" id="questionButton"
-                                    onclick="questionFormValidate(); return false;" class="btn btn-success float-right">
-                                    Add Question &nbsp; <span><i class="fa fa-plus" aria-hidden="true"></i></span>
-                                </button>
                             </div>
                         </form>
                     </div>
 
-                    <div class="card card-info">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>No</th>
-                                    <th>Question</th>
-                                    <th>Option A</th>
-                                    <th>Option B</th>
-                                    <th>Option C</th>
-                                    <th>Option D</th>
-                                    <th>Correct Option</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
 
                 </div>
                 <div class="tab-pane fade" id="activate" role="tabpanel" aria-labelledby="activate-tab">
@@ -269,6 +219,19 @@
         $("#examendtime").on("change.datetimepicker", function (e) {
             $('#examstarttime').datetimepicker('maxDate', e.date);
         });
+
+        $('#addrow').click(function () {
+            if ($('#question_table tr').length <= 9) {
+                var newRowid = get_lastID();
+                $('#question_table tbody').append(newRowid);
+            } else {
+                alert("Reached Maximum Rows!");
+            };
+        });
+
+        $("#question_table").on("click", "#delrow", function () {
+            $(this).closest("tr").remove();
+        });
     });
 
     function basicFormValidate() {
@@ -297,14 +260,6 @@
             $('#examendtime').removeClass('is-invalid');
             $('#examendtime').addClass('is-valid');
         }
-        // if (!$('#totalquestion').val()) {
-        //     isValid = false;
-        //     $('#totalquestion').addClass('is-invalid');
-        // } else {
-        //     isValid = true;
-        //     $('#totalquestion').removeClass('is-invalid');
-        //     $('#totalquestion').addClass('is-valid');
-        // }
         if (!$('#correctmark').val()) {
             isValid = false;
             $('#correctmark').addClass('is-invalid');
@@ -424,6 +379,58 @@
         }
     }
 
+    function basicFormSubmit() {
+        $.ajax({
+            type: "POST",
+            url: "exam",
+            data: $('#questionForm').serialize(),
+            processData: false,
+            beforeSend: function () {
+                $('#basicButton').attr("disabled", true);
+                $('#basicButton').text('Processing...');
+            },
+            success: function (response) {
+                $('#basicButton').removeAttr("disabled");
+                $('#basicButton').html('Next &nbsp; <span><i class="fa fa-forward"></i></span>');
+
+                $("#basic-tab").removeClass("active");
+                $("#question-tab").removeClass("disabled");
+                $("#question-tab").addClass("active");
+
+                $("#basic").removeClass("show active");
+                $("#question").addClass("show active");
+
+                $('#basic_id').val(response);
+            }
+        });
+    }
+
+    var get_lastID = function () {
+        var id = $('#question_table tr:last-child td:first-child').text();
+        var lastChar = parseInt(id);
+            lastChar = lastChar + 1;
+        var newRow = '<tr> \
+                    <td>'+lastChar+'</td> \
+                    <td> <textarea class="form-control" name="qn_name_1" id="qn_name" placeholder="Question" rows="1"></textarea></td> \
+                    <td> <textarea class="form-control" name="opt_a_1" id="opt_a" placeholder="Option A" rows="1"></textarea></td> \
+                    <td> <textarea class="form-control" name="opt_b_1" id="opt_b" placeholder="Option B" rows="1"></textarea></td> \
+                    <td> <textarea class="form-control" name="opt_c_1" id="opt_c" placeholder="Option C" rows="1"></textarea></td> \
+                    <td> <textarea class="form-control" name="opt_d_1" id="opt_d" placeholder="Option D" rows="1"></textarea></td> \
+                    <td> <select class="form-control" name="opt_correct_1" id="opt_correct" data-parsley-required="true"> \
+                            <option value="">Select Option</option> \
+                            <option value="a">Option A</option> \
+                            <option value="b">Option B</option> \
+                            <option value="c">Option C</option> \
+                            <option value="d">Option D</option> \
+                         </select> \
+                    </td> \
+                    <td><button type="button" class="btn btn-danger delrow" id="delrow"> \
+                            <i class="fa fa-minus-circle"></i> \
+                        </button> \
+                    </td> \
+                </tr>';
+        return newRow;
+    }
 
 </script>
 @stop
