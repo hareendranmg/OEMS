@@ -9,83 +9,216 @@
 @section('content_header')
 <div class="col-12 col-sm-12">
     <div class="card card-primary card-tabs">
-        <div class="card-header p-0 pt-1">
-            <ul class="nav nav-tabs" id="custom-tabs-two-tab" role="tablist">
-                <li class="pt-2 px-3">
-                    <h3 class="card-title">Create Exam</h3>
+        <div class="card p-3 pt-4">
+            <ul class="nav nav-pills justify-content-center nav-fill" id="custom-tabs-two-tab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="basic-tab" data-toggle="pill" href="#basic" role="tab"
+                        aria-controls="basic" aria-selected="true">Basic Details&nbsp;<span><i
+                                class="fa fa-angle-double-right"></i></span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" id="custom-tabs-two-home-tab" data-toggle="pill"
-                        href="#custom-tabs-two-home" role="tab" aria-controls="custom-tabs-two-home"
-                        aria-selected="true">Basic Details</a>
+                    <a class="nav-link disabled" id="question-tab" data-toggle="pill" href="#question" role="tab"
+                        aria-controls="question" aria-selected="false">Add Questions&nbsp;<span><i
+                                class="fa fa-angle-double-right"></i></span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="custom-tabs-two-profile-tab" data-toggle="pill"
-                        href="#custom-tabs-two-profile" role="tab" aria-controls="custom-tabs-two-profile"
-                        aria-selected="false">Add Questions</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="custom-tabs-two-messages-tab" data-toggle="pill"
-                        href="#custom-tabs-two-messages" role="tab" aria-controls="custom-tabs-two-messages"
-                        aria-selected="false">Activate Exam</a>
+                    <a class="nav-link disabled" id="activate-tab" data-toggle="pill" href="#activate" role="tab"
+                        aria-controls="activate" aria-selected="false">Activate Exam&nbsp;<span><i
+                                class="fa fa-check-double"></i></span></a>
                 </li>
             </ul>
         </div>
         <div class="card-body">
             <div class="tab-content" id="custom-tabs-two-tabContent">
-                <div class="tab-pane fade show active" id="custom-tabs-two-home" role="tabpanel"
-                    aria-labelledby="custom-tabs-two-home-tab">
+                <div class="tab-pane fade" id="basic" role="tabpanel" aria-labelledby="basic-tab">
                     <div class="card card-info">
-                        <form class="form-horizontal">
+                        <form class="form-horizontal" id="basicForm">
+                            @csrf
+                            <input type="hidden" name="type" value="basic">
+                            <input type="hidden" name="basic_id" id="basic_id" value="">
                             <div class="card-body">
                                 <div class="form-group row">
-                                    <label for="inputEmail3" class="col-sm-2 col-form-label">Exam Name</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="inputEmail3" placeholder="Exam Name">
+                                    <label for="examname" class="col-sm-4 col-form-label">Exam name</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" id="examname" name="examname"
+                                            placeholder="Exam Name">
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label for="examtime" class="col-sm-2 col-form-label">Exam Time</label>
-                                    <div class="col-sm-10">
-                                        <div class="form-group">
-                                            <div class="input-group date" id="examtime" data-target-input="nearest">
-                                                <input type="text" class="form-control datetimepicker-input" data-target="#examtime" />
-                                                <div class="input-group-append" data-target="#examtime" data-toggle="datetimepicker">
-                                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                    <label for="examstarttime" class="col-sm-4 col-form-label">Exam start time</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control datetimepicker-input" id="examstarttime"
+                                            name="examstarttime" data-toggle="datetimepicker"
+                                            placeholder="Exam start time" data-target="#examstarttime" />
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <div class="offset-sm-2 col-sm-10">
-                                        <div class="form-check">
-                                            <input type="checkbox" class="form-check-input" id="exampleCheck2">
-                                            <label class="form-check-label" for="exampleCheck2">Remember me</label>
-                                        </div>
+                                    <label for="examendtime" class="col-sm-4 col-form-label">Exam end time</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control datetimepicker-input" id="examendtime"
+                                            name="examendtime" data-toggle="datetimepicker" placeholder="Exam end time"
+                                            data-target="#examendtime" />
+                                    </div>
+                                </div>
+                                <!-- <div class="form-group row">
+                                    <label for="totalquestion" class="col-sm-4 col-form-label">Total Questions</label>
+                                    <div class="col-sm-8">
+                                        <input type="number" onkeyup="if(!this.checkValidity()){this.value='';};" class="form-control" id="totalquestion" name="totalquestion" placeholder="Total Questions" min="0">
+                                    </div>
+                                </div> -->
+                                <div class="form-group row">
+                                    <label for="correctmark" class="col-sm-4 col-form-label">Mark for correct
+                                        answer</label>
+                                    <div class="col-sm-8">
+                                        <input type="number" onkeyup="if(!this.checkValidity()){this.value='';};"
+                                            class="form-control" id="correctmark" name="correctmark"
+                                            placeholder="Mark for correct answer" min="0">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="wrongmark" class="col-sm-4 col-form-label">Mark for wrong answer</label>
+                                    <div class="col-sm-8">
+                                        <input type="number" onkeyup="if(!this.checkValidity()){this.value='';};"
+                                            class="form-control" id="wrongmark" name="wrongmark"
+                                            placeholder="Mark for wrong answer" min="-10">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="passmark" class="col-sm-4 col-form-label">Mark for pass exam</label>
+                                    <div class="col-sm-8">
+                                        <input type="number" onkeyup="if(!this.checkValidity()){this.value='';};"
+                                            class="form-control" id="passmark" name="passmark"
+                                            placeholder="Mark for pass exam" min="0">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="category" class="col-sm-4 col-form-label">Candidate category</label>
+                                    <div class="col-sm-8">
+                                        <select class="form-control" name="category" id="category"
+                                            data-parsley-required="true">
+                                            <option value="">Select Category</option>
+                                            @foreach($categories as $category)
+                                            <option value="{{ $category->cat_id }}">{{ $category->cat_name }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
                             </div>
-                            <!-- /.card-body -->
                             <div class="card-footer">
-                                <button type="submit" class="btn btn-info">Sign in</button>
-                                <button type="submit" class="btn btn-default float-right">Cancel</button>
+                                <button type="reset" class="btn btn-secondary">Cancel</button>
+                                <button type="submit" id="basicButton" onclick="basicFormValidate(); return false;"
+                                    class="btn btn-success float-right">Next &nbsp; <span><i
+                                            class="fa fa-forward"></i></span></button>
                             </div>
-                            <!-- /.card-footer -->
                         </form>
                     </div>
                 </div>
-                <div class="tab-pane fade" id="custom-tabs-two-profile" role="tabpanel"
-                    aria-labelledby="custom-tabs-two-profile-tab">
-                    Mauris tincidunt mi at erat gravida, eget tristique urna bibendum. Mauris pharetra purus ut ligula
-                    tempor, et vulputate metus facilisis. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Maecenas
-                    sollicitudin, nisi a luctus interdum, nisl ligula placerat mi, quis posuere purus ligula eu lectus.
-                    Donec nunc tellus, elementum sit amet ultricies at, posuere nec nunc. Nunc euismod pellentesque
-                    diam.
+                <div class="tab-pane fade show active" id="question" role="tabpanel" aria-labelledby="question-tab">
+                    <div class="card card-info">
+                        <form class="form-horizontal" id="basicForm">
+                            @csrf
+                            <input type="hidden" name="type" value="question">
+                            <input type="hidden" name="question_id" id="question_id" value="">
+                            <div class="card-body">
+                                <div class="form-group row">
+                                    <label for="totalquestion" class="col-sm-4 col-form-label">Total Questions</label>
+                                    <div class="col-sm-8">
+                                        <input type="number"
+                                            onkeyup="if(!this.checkValidity()){this.value='1';}; if(!this.value){this.value='1';};"
+                                            class="form-control" id="totalquestion" name="totalquestion"
+                                            placeholder="Total Questions" min="1" value="1">
+                                    </div>
+                                </div>
+                                <div id="qndiv">
+                                    <div class="form-group row">
+                                        <label for="qn_name" class="col-sm-4 col-form-label">Question</label>
+                                        <div class="col-sm-8">
+                                            <textarea class="form-control" name="qn_name" id="qn_name"
+                                                placeholder="Question" rows="1"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="opt_a" class="col-sm-4 col-form-label">Option A</label>
+                                        <div class="col-sm-8">
+                                            <textarea class="form-control" name="opt_a" id="opt_a"
+                                                placeholder="Option A" rows="1"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="opt_b" class="col-sm-4 col-form-label">Option B</label>
+                                        <div class="col-sm-8">
+                                            <textarea class="form-control" name="opt_b" id="opt_b"
+                                                placeholder="Option B" rows="1"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="opt_c" class="col-sm-4 col-form-label">Option C</label>
+                                        <div class="col-sm-8">
+                                            <textarea class="form-control" name="opt_c" id="opt_c"
+                                                placeholder="Option C" rows="1"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="opt_d" class="col-sm-4 col-form-label">Option D</label>
+                                        <div class="col-sm-8">
+                                            <textarea class="form-control" name="opt_d" id="opt_d"
+                                                placeholder="Option D" rows="1"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="opt_correct" class="col-sm-4 col-form-label">Correct option</label>
+                                        <div class="col-sm-8">
+                                            <select class="form-control" name="opt_correct" id="opt_correct"
+                                                data-parsley-required="true">
+                                                <option value="">Select Option</option>
+                                                <option value="a">Option A</option>
+                                                <option value="b">Option B</option>
+                                                <option value="c">Option C</option>
+                                                <option value="d">Option D</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <button type="reset" class="btn btn-secondary">Clear</button>
+                                <button type="submit" id="questionButton"
+                                    onclick="questionFormValidate(); return false;" class="btn btn-success float-right">
+                                    Add Question &nbsp; <span><i class="fa fa-plus" aria-hidden="true"></i></span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="card card-info">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Question</th>
+                                    <th>Option A</th>
+                                    <th>Option B</th>
+                                    <th>Option C</th>
+                                    <th>Option D</th>
+                                    <th>Correct Option</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
                 </div>
-                <div class="tab-pane fade" id="custom-tabs-two-messages" role="tabpanel"
-                    aria-labelledby="custom-tabs-two-messages-tab">
+                <div class="tab-pane fade" id="activate" role="tabpanel" aria-labelledby="activate-tab">
                     Morbi turpis dolor, vulputate vitae felis non, tincidunt congue mauris. Phasellus volutpat augue id
                     mi placerat mollis. Vivamus faucibus eu massa eget condimentum. Fusce nec hendrerit sem, ac
                     tristique nulla. Integer vestibulum orci odio. Cras nec augue ipsum. Suspendisse ut velit
@@ -93,15 +226,6 @@
                     Nam vulputate, eros non luctus efficitur, ipsum odio volutpat massa, sit amet sollicitudin est
                     libero sed ipsum. Nulla lacinia, ex vitae gravida fermentum, lectus ipsum gravida arcu, id fermentum
                     metus arcu vel metus. Curabitur eget sem eu risus tincidunt eleifend ac ornare magna.
-                </div>
-                <div class="tab-pane fade" id="custom-tabs-two-settings" role="tabpanel"
-                    aria-labelledby="custom-tabs-two-settings-tab">
-                    Pellentesque vestibulum commodo nibh nec blandit. Maecenas neque magna, iaculis tempus turpis ac,
-                    ornare sodales tellus. Mauris eget blandit dolor. Quisque tincidunt venenatis vulputate. Morbi
-                    euismod molestie tristique. Vestibulum consectetur dolor a vestibulum pharetra. Donec interdum
-                    placerat urna nec pharetra. Etiam eget dapibus orci, eget aliquet urna. Nunc at consequat diam. Nunc
-                    et felis ut nisl commodo dignissim. In hac habitasse platea dictumst. Praesent imperdiet accumsan ex
-                    sit amet facilisis.
                 </div>
             </div>
         </div>
@@ -116,9 +240,190 @@
 
 
 @section('js')
-<script type="text/javascript">
-    $(function () {
-        $('#examtime').datetimepicker();
+<script>
+
+    $(document).ready(function () {
+        $('body').Layout('fixLayoutHeight');
+        $('body').addClass('layout-fixed layout-navbar-fixed ');
+        // $('.main-sidebar').height($(document).outerHeight());
+        $('#examendtime').attr("disabled", true);
+        $('#examstarttime').on("input propertychange", function (e) {
+            if ($('#examstarttime').val()) {
+                $('#examendtime').removeAttr('disabled');
+            } else {
+                $('#examendtime').attr('disabled', true);
+            }
+        });
+
+        $('#examstarttime').datetimepicker({
+            format: 'YYYY-MM-DD HH:mm:ss',
+            minDate: new Date(),
+        });
+        $('#examendtime').datetimepicker({
+            format: 'YYYY-MM-DD HH:mm:ss',
+            useCurrent: false,
+        });
+        $("#examstarttime").on("change.datetimepicker", function (e) {
+            $('#examendtime').datetimepicker('minDate', e.date);
+        });
+        $("#examendtime").on("change.datetimepicker", function (e) {
+            $('#examstarttime').datetimepicker('maxDate', e.date);
+        });
     });
+
+    function basicFormValidate() {
+        var isValid = false;
+        if (!$('#examname').val()) {
+            isValid = false;
+            $('#examname').addClass('is-invalid');
+        } else {
+            isValid = true;
+            $('#examname').removeClass('is-invalid');
+            $('#examname').addClass('is-valid');
+        }
+        if (!$('#examstarttime').val()) {
+            isValid = false;
+            $('#examstarttime').addClass('is-invalid');
+        } else {
+            isValid = true;
+            $('#examstarttime').removeClass('is-invalid');
+            $('#examstarttime').addClass('is-valid');
+        }
+        if (!$('#examendtime').val()) {
+            isValid = false;
+            $('#examendtime').addClass('is-invalid');
+        } else {
+            isValid = true;
+            $('#examendtime').removeClass('is-invalid');
+            $('#examendtime').addClass('is-valid');
+        }
+        // if (!$('#totalquestion').val()) {
+        //     isValid = false;
+        //     $('#totalquestion').addClass('is-invalid');
+        // } else {
+        //     isValid = true;
+        //     $('#totalquestion').removeClass('is-invalid');
+        //     $('#totalquestion').addClass('is-valid');
+        // }
+        if (!$('#correctmark').val()) {
+            isValid = false;
+            $('#correctmark').addClass('is-invalid');
+        } else {
+            isValid = true;
+            $('#correctmark').removeClass('is-invalid');
+            $('#correctmark').addClass('is-valid');
+        }
+        if (!$('#wrongmark').val()) {
+            isValid = false;
+            $('#wrongmark').addClass('is-invalid');
+        } else {
+            isValid = true;
+            $('#wrongmark').removeClass('is-invalid');
+            $('#wrongmark').addClass('is-valid');
+        }
+        if (!$('#passmark').val()) {
+            isValid = false;
+            $('#passmark').addClass('is-invalid');
+        } else {
+            isValid = true;
+            $('#passmark').removeClass('is-invalid');
+            $('#passmark').addClass('is-valid');
+        }
+        if (!$('#category').val()) {
+            isValid = false;
+            $('#category').addClass('is-invalid');
+        } else {
+            isValid = true;
+            $('#category').removeClass('is-invalid');
+            $('#category').addClass('is-valid');
+        }
+
+        if (isValid === true) {
+            basicFormSubmit();
+        }
+    }
+
+    function basicFormSubmit() {
+        $.ajax({
+            type: "POST",
+            url: "exam",
+            data: $('#basicForm').serialize(),
+            processData: false,
+            beforeSend: function () {
+                $('#basicButton').attr("disabled", true);
+                $('#basicButton').text('Processing...');
+            },
+            success: function (response) {
+                $('#basicButton').removeAttr("disabled");
+                $('#basicButton').html('Next &nbsp; <span><i class="fa fa-forward"></i></span>');
+
+                $("#basic-tab").removeClass("active");
+                $("#question-tab").removeClass("disabled");
+                $("#question-tab").addClass("active");
+
+                $("#basic").removeClass("show active");
+                $("#question").addClass("show active");
+
+                $('#basic_id').val(response);
+            }
+        });
+    }
+
+    function questionFormValidate() {
+        if (!$('#qn_name').val()) {
+            var v1 = false;
+            $('#qn_name').addClass('is-invalid');
+        } else {
+            v1 = true;
+            $('#qn_name').removeClass('is-invalid');
+            $('#qn_name').addClass('is-valid');
+        }
+        if (!$('#opt_a').val()) {
+            var v2 = false;
+            $('#opt_a').addClass('is-invalid');
+        } else {
+            v2 = true;
+            $('#opt_a').removeClass('is-invalid');
+            $('#opt_a').addClass('is-valid');
+        }
+        if (!$('#opt_b').val()) {
+            var v3 = false;
+            $('#opt_b').addClass('is-invalid');
+        } else {
+            v3 = true;
+            $('#opt_b').removeClass('is-invalid');
+            $('#opt_b').addClass('is-valid');
+        }
+        if (!$('#opt_c').val()) {
+            var v4 = false;
+            $('#opt_c').addClass('is-invalid');
+        } else {
+            v4 = true;
+            $('#opt_c').removeClass('is-invalid');
+            $('#opt_c').addClass('is-valid');
+        }
+        if (!$('#opt_d').val()) {
+            var v5 = false;
+            $('#opt_d').addClass('is-invalid');
+        } else {
+            v5 = true;
+            $('#opt_d').removeClass('is-invalid');
+            $('#opt_d').addClass('is-valid');
+        }
+        if (!$('#opt_correct').val()) {
+            var v6 = false;
+            $('#opt_correct').addClass('is-invalid');
+        } else {
+            v6 = true;
+            $('#opt_correct').removeClass('is-invalid');
+            $('#opt_correct').addClass('is-valid');
+        }
+
+        if (v1 && v2 && v3 && v4 && v5 && v6) {
+            questionFormSubmit();
+        }
+    }
+
+
 </script>
 @stop

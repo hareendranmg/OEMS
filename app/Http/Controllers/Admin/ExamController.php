@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use DB;
+use Carbon;
 
 class ExamController extends Controller
 {
@@ -14,7 +16,9 @@ class ExamController extends Controller
      */
     public function index()
     {
-        return view('/admin/createexam');
+        $categories = DB::table('category')
+                        ->get();
+        return view('/admin/createexam', compact('categories'));
     }
 
     /**
@@ -35,12 +39,52 @@ class ExamController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if($request->type == 'basic') {
+            $examname = $request->examname;
+            $examstarttime = $request->examstarttime;
+            $examendtime = $request->examendtime;
+            // $totalquestion = $request->totalquestion;
+            $correctmark = $request->correctmark;
+            $wrongmark = $request->wrongmark;
+            $passmark = $request->passmark;
+            $category = $request->category;
+
+            $ifExist = DB::table('exam_master')
+                        ->where([
+                                ['exam_name', $examname],
+                                ['exam_start_time', $examstarttime],
+                                ['exam_end_time', $examendtime],
+                                // ['total_questions', $totalquestion],
+                                ['right_mark', $correctmark],
+                                ['wrong_mark', $wrongmark],
+                                ['pass_mark', $passmark],
+                                ['category', $category],
+                            ])
+                        ->select('id')
+                        ->first();
+                        
+            if($ifExist) {            
+                return $ifExist->id;
+            } else {
+                $basicDetailsID = DB::table('exam_master')
+                                    ->insertGetId([
+                                        'exam_name' => $examname,
+                                        'exam_start_time' => $examstarttime,
+                                        'exam_end_time' => $examendtime,
+                                        // 'total_questions' => $totalquestion,
+                                        'right_mark' => $correctmark,
+                                        'wrong_mark' => $wrongmark,
+                                        'pass_mark' => $passmark,
+                                        'category' => $category,
+                                        ]);
+                return $basicDetailsID;
+            }
+        }
     }
 
     /**
-     * Display the specified resource.
      *
+     * Display the specified resource.
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
