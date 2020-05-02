@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Add User')
+@section('title', 'Categories')
 
 @section('css')
 <link rel="stylesheet" href="/css/admin_custom.css">

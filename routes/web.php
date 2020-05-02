@@ -31,7 +31,7 @@ Route::group(['middleware' => ['isadmin']], function () {
     Route::get('/admin/adduserstocategory', 'Admin\CategoryController@adduserstocategory');
 
     Route::resource('/admin/exam', 'Admin\ExamController');
-    Route::get('/admin/showexam', 'Admin\ExamController@showexam');
+    Route::get('/admin/showexams', 'Admin\ExamController@showexams');
 });
 Route::group(['middleware' => ['iscandidate']], function () {
     Route::get('/candidate', 'Candidate\CandidateHomeController@index');

@@ -23,14 +23,14 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link disabled" id="activate-tab" data-toggle="pill" href="#activate" role="tab"
-                        aria-controls="activate" aria-selected="false">Activate Exam&nbsp;<span><i
+                        aria-controls="activate" aria-selected="false">Create Exam&nbsp;<span><i
                                 class="fa fa-check-double"></i></span></a>
                 </li>
             </ul>
         </div>
         <div class="card-body">
             <div class="tab-content" id="custom-tabs-two-tabContent">
-                <div class="tab-pane fade" id="basic" role="tabpanel" aria-labelledby="basic-tab">
+                <div class="tab-pane fade show active" id="basic" role="tabpanel" aria-labelledby="basic-tab">
                     <div class="card card-info">
                         <form class="form-horizontal" id="basicForm">
                             @csrf
@@ -60,12 +60,12 @@
                                             data-target="#examendtime" />
                                     </div>
                                 </div>
-                                <!-- <div class="form-group row">
+                                <div class="form-group row">
                                     <label for="totalquestion" class="col-sm-4 col-form-label">Total Questions</label>
                                     <div class="col-sm-8">
-                                        <input type="number" onkeyup="if(!this.checkValidity()){this.value='';};" class="form-control" id="totalquestion" name="totalquestion" placeholder="Total Questions" min="0">
+                                        <input type="number" onkeyup="if(!this.checkValidity()){this.value='';};" class="form-control" id="totalquestion" name="totalquestion" placeholder="Total Questions" min="1">
                                     </div>
-                                </div> -->
+                                </div>
                                 <div class="form-group row">
                                     <label for="correctmark" class="col-sm-4 col-form-label">Mark for correct
                                         answer</label>
@@ -113,7 +113,7 @@
                         </form>
                     </div>
                 </div>
-                <div class="tab-pane fade show active" id="question" role="tabpanel" aria-labelledby="question-tab">
+                <div class="tab-pane fade" id="question" role="tabpanel" aria-labelledby="question-tab">
                     <div class="card card-info">
                         <form class="form-horizontal" id="basicForm">
                             @csrf
@@ -121,12 +121,15 @@
                             <input type="hidden" name="question_id" id="question_id" value="">
                             <div class="card card-info">
                                 <div class="card-body">
+                                    <p class="float-left">
+                                        Added Questions: <span id="no_of_rows" >1</span> &nbsp;&nbsp;
+                                        Total Questions: <span id="total_qns" >4</span>
+                                    </p>
                                     <button type="button" class="btn btn-info float-right" id="addrow">Add Question
                                         &nbsp; <span><i class="fa fa-plus" aria-hidden="true"></i></span></button>
                                     <table class="table table-md" id="question_table">
                                         <thead>
                                             <tr>
-                                                <th>#</th>
                                                 <th>Question</th>
                                                 <th>Option A</th>
                                                 <th>Option B</th>
@@ -137,19 +140,18 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td><textarea class="form-control" name="qn_name_1" id="qn_name"
+                                            <tr class="data">
+                                                <td><textarea class="form-control value" name="qn_name_1" id="qn_name"
                                                         placeholder="Question" rows="1"></textarea></td>
-                                                <td><textarea class="form-control" name="opt_a_1" id="opt_a"
+                                                <td><textarea class="form-control value" name="opt_a_1" id="opt_a"
                                                         placeholder="Option A" rows="1"></textarea></td>
-                                                <td><textarea class="form-control" name="opt_b_1" id="opt_b"
+                                                <td><textarea class="form-control value" name="opt_b_1" id="opt_b"
                                                         placeholder="Option B" rows="1"></textarea></td>
-                                                <td><textarea class="form-control" name="opt_c_1" id="opt_c"
+                                                <td><textarea class="form-control value" name="opt_c_1" id="opt_c"
                                                         placeholder="Option C" rows="1"></textarea></td>
-                                                <td><textarea class="form-control" name="opt_d_1" id="opt_d"
+                                                <td><textarea class="form-control value" name="opt_d_1" id="opt_d"
                                                         placeholder="Option D" rows="1"></textarea></td>
-                                                <td><select class="form-control" name="opt_correct_1" id="opt_correct"
+                                                <td><select class="form-control value" name="opt_correct_1" id="opt_correct"
                                                         data-parsley-required="true">
                                                         <option value="">Select Option</option>
                                                         <option value="a">Option A</option>
@@ -163,25 +165,50 @@
                                     </table>
                                 </div>
                             </div>
+                            <div class="card-footer">
+                                <button type="submit" id="questionButton" onclick="questionFormValidate(); return false;"
+                                    class="btn btn-success float-right">
+                                    Next &nbsp; <span><i class="fa fa-forward"></i></span>
+                                </button>
+                            </div>
                         </form>
                     </div>
 
 
                 </div>
                 <div class="tab-pane fade" id="activate" role="tabpanel" aria-labelledby="activate-tab">
-                    Morbi turpis dolor, vulputate vitae felis non, tincidunt congue mauris. Phasellus volutpat augue id
-                    mi placerat mollis. Vivamus faucibus eu massa eget condimentum. Fusce nec hendrerit sem, ac
-                    tristique nulla. Integer vestibulum orci odio. Cras nec augue ipsum. Suspendisse ut velit
-                    condimentum, mattis urna a, malesuada nunc. Curabitur eleifend facilisis velit finibus tristique.
-                    Nam vulputate, eros non luctus efficitur, ipsum odio volutpat massa, sit amet sollicitudin est
-                    libero sed ipsum. Nulla lacinia, ex vitae gravida fermentum, lectus ipsum gravida arcu, id fermentum
-                    metus arcu vel metus. Curabitur eget sem eu risus tincidunt eleifend ac ornare magna.
+                        <div class="d-flex justify-content-center">
+                            <h3>Click the button below to create the Exam.</h3>
+                        </div>
+                        <div class="d-flex justify-content-center p-4">
+                            <button type="button" class="btn btn-lg btn-outline-success" id="createExamButton" onclick="createExam(); return false;">
+                                Create Exam
+                            </button>
+                        </div>
                 </div>
             </div>
         </div>
         <!-- /.card -->
     </div>
 </div>
+
+<div class="modal fade show" id="createdModal" tabindex="-1" role="dialog" >
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="text-success">×</span></button>
+      </div>
+      <div class="modal-body">
+        <h4 class="text-success">Exam created successfully...</h4>
+      </div>
+      <div class="modal-footer justify-content-between">
+        <a href="{{url('admin/exam')}}" class="btn btn-outline-success">Create new exam</a>
+        <a href="{{url('admin/showexams')}}" class="btn btn-outline-success">View exams</a>
+      </div>
+    </div>
+  </div>>
+</div>
+
 @stop
 
 @section('content')
@@ -221,16 +248,17 @@
         });
 
         $('#addrow').click(function () {
-            if ($('#question_table tr').length <= 9) {
+            if ($('#question_table tr').length <= $("#total_qns").text()) {
                 var newRowid = get_lastID();
                 $('#question_table tbody').append(newRowid);
             } else {
-                alert("Reached Maximum Rows!");
+                alert("Maximum questions reached!");
             };
         });
 
-        $("#question_table").on("click", "#delrow", function () {
-            $(this).closest("tr").remove();
+        $("#question_table").on('click', '.delrow', function () {
+            $(this).closest('tr').remove();
+            $("#no_of_rows").text($('#question_table tr').length - 1)
         });
     });
 
@@ -259,6 +287,14 @@
             isValid = true;
             $('#examendtime').removeClass('is-invalid');
             $('#examendtime').addClass('is-valid');
+        }
+        if (!$('#totalquestion').val()) {
+            isValid = false;
+            $('#totalquestion').addClass('is-invalid');
+        } else {
+            isValid = true;
+            $('#totalquestion').removeClass('is-invalid');
+            $('#totalquestion').addClass('is-valid');
         }
         if (!$('#correctmark').val()) {
             isValid = false;
@@ -320,103 +356,99 @@
                 $("#question").addClass("show active");
 
                 $('#basic_id').val(response);
+                $("#total_qns").text($('#totalquestion').val());
             }
         });
     }
 
     function questionFormValidate() {
-        if (!$('#qn_name').val()) {
-            var v1 = false;
-            $('#qn_name').addClass('is-invalid');
-        } else {
-            v1 = true;
-            $('#qn_name').removeClass('is-invalid');
-            $('#qn_name').addClass('is-valid');
+        var arrays = [], qnFormValid = true;
+        console.log($('#question_table tr').length - 1);
+        console.log($("#total_qns").text());
+        
+        if (($('#question_table tr').length - 1 ) < $("#total_qns").text()) {
+            qnFormValid = false;
+            $(document).Toasts('create', {
+                class: 'bg-danger',
+                autohide: true,
+                title: 'Alert',
+                title: 'The no of questions you added doesnot match with the total no of questions.'
+            })
         }
-        if (!$('#opt_a').val()) {
-            var v2 = false;
-            $('#opt_a').addClass('is-invalid');
-        } else {
-            v2 = true;
-            $('#opt_a').removeClass('is-invalid');
-            $('#opt_a').addClass('is-valid');
-        }
-        if (!$('#opt_b').val()) {
-            var v3 = false;
-            $('#opt_b').addClass('is-invalid');
-        } else {
-            v3 = true;
-            $('#opt_b').removeClass('is-invalid');
-            $('#opt_b').addClass('is-valid');
-        }
-        if (!$('#opt_c').val()) {
-            var v4 = false;
-            $('#opt_c').addClass('is-invalid');
-        } else {
-            v4 = true;
-            $('#opt_c').removeClass('is-invalid');
-            $('#opt_c').addClass('is-valid');
-        }
-        if (!$('#opt_d').val()) {
-            var v5 = false;
-            $('#opt_d').addClass('is-invalid');
-        } else {
-            v5 = true;
-            $('#opt_d').removeClass('is-invalid');
-            $('#opt_d').addClass('is-valid');
-        }
-        if (!$('#opt_correct').val()) {
-            var v6 = false;
-            $('#opt_correct').addClass('is-invalid');
-        } else {
-            v6 = true;
-            $('#opt_correct').removeClass('is-invalid');
-            $('#opt_correct').addClass('is-valid');
-        }
-
-        if (v1 && v2 && v3 && v4 && v5 && v6) {
-            questionFormSubmit();
+        $("#question_table tr.data").map(function (index, elem) {
+            var ret = [];
+            $('.value', this).each(function () {
+                   var d = $(this).val();
+                if(d === "") {
+                    $(this).addClass('is-invalid');
+                    qnFormValid = false;
+                } else {
+                    $(this).removeClass('is-invalid');
+                }
+                ret.push(d);
+            });
+            arrays.push(ret);
+        });
+        console.log(arrays);
+        if(qnFormValid) {
+            questionFormSubmit(arrays);
         }
     }
 
-    function basicFormSubmit() {
+    function questionFormSubmit(arrays) {
+        var exam_id = $('#basic_id').val();
         $.ajax({
             type: "POST",
             url: "exam",
-            data: $('#questionForm').serialize(),
-            processData: false,
+            headers: {'X-CSRF-TOKEN': "{{ csrf_token() }}" },
+            data: {arrays: arrays, exam_id: exam_id, type: 'question'},
             beforeSend: function () {
-                $('#basicButton').attr("disabled", true);
-                $('#basicButton').text('Processing...');
+                $('#questionButton').attr("disabled", true);
+                $('#questionButton').text('Processing...');
             },
             success: function (response) {
-                $('#basicButton').removeAttr("disabled");
-                $('#basicButton').html('Next &nbsp; <span><i class="fa fa-forward"></i></span>');
+                $('#questionButton').removeAttr("disabled");
+                $('#questionButton').html('Next &nbsp; <span><i class="fa fa-forward"></i></span>');
 
-                $("#basic-tab").removeClass("active");
-                $("#question-tab").removeClass("disabled");
-                $("#question-tab").addClass("active");
+                $("#question-tab").removeClass("active");
+                $("#activate-tab").removeClass("disabled");
+                $("#activate-tab").addClass("active");
 
-                $("#basic").removeClass("show active");
-                $("#question").addClass("show active");
+                $("#question").removeClass("show active");
+                $("#activate").addClass("show active");
+            }
+        });
+    }
 
-                $('#basic_id').val(response);
+    function createExam() {
+        var exam_id = $('#basic_id').val();
+        $.ajax({
+            type: "POST",
+            url: "exam",
+            headers: {'X-CSRF-TOKEN': "{{ csrf_token() }}" },
+            data: {exam_id: exam_id, type: 'create'},
+            beforeSend: function () {
+                $('#createExamButton').attr("disabled", true);
+                $('#createExamButton').text('Creating...');
+            },
+            success: function (response) {
+                $('#createExamButton').html('Exam Created.');
+                $('#createdModal').modal('show')
             }
         });
     }
 
     var get_lastID = function () {
-        var id = $('#question_table tr:last-child td:first-child').text();
-        var lastChar = parseInt(id);
-            lastChar = lastChar + 1;
-        var newRow = '<tr> \
-                    <td>'+lastChar+'</td> \
-                    <td> <textarea class="form-control" name="qn_name_1" id="qn_name" placeholder="Question" rows="1"></textarea></td> \
-                    <td> <textarea class="form-control" name="opt_a_1" id="opt_a" placeholder="Option A" rows="1"></textarea></td> \
-                    <td> <textarea class="form-control" name="opt_b_1" id="opt_b" placeholder="Option B" rows="1"></textarea></td> \
-                    <td> <textarea class="form-control" name="opt_c_1" id="opt_c" placeholder="Option C" rows="1"></textarea></td> \
-                    <td> <textarea class="form-control" name="opt_d_1" id="opt_d" placeholder="Option D" rows="1"></textarea></td> \
-                    <td> <select class="form-control" name="opt_correct_1" id="opt_correct" data-parsley-required="true"> \
+        var no_of_rows = $('#question_table tr').length;
+        $("#no_of_rows").text(no_of_rows);
+           
+        var newRow = '<tr class="data"> \
+                    <td> <textarea class="form-control value" name="qn_name_1" id="qn_name" placeholder="Question" rows="1"></textarea></td> \
+                    <td> <textarea class="form-control value" name="opt_a_1" id="opt_a" placeholder="Option A" rows="1"></textarea></td> \
+                    <td> <textarea class="form-control value" name="opt_b_1" id="opt_b" placeholder="Option B" rows="1"></textarea></td> \
+                    <td> <textarea class="form-control value" name="opt_c_1" id="opt_c" placeholder="Option C" rows="1"></textarea></td> \
+                    <td> <textarea class="form-control value" name="opt_d_1" id="opt_d" placeholder="Option D" rows="1"></textarea></td> \
+                    <td> <select class="form-control value" name="opt_correct_1" id="opt_correct" data-parsley-required="true"> \
                             <option value="">Select Option</option> \
                             <option value="a">Option A</option> \
                             <option value="b">Option B</option> \

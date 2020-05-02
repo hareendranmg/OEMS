@@ -21,6 +21,25 @@ class ExamController extends Controller
         return view('/admin/createexam', compact('categories'));
     }
 
+    public function showexams()
+    {
+        if(request()->ajax())
+        {
+            return datatables()->of(DB::table('exam_master')
+                                ->join('category', 'category.cat_id', 'exam_master.category')
+                                ->get())
+                    ->addColumn('action', function($data){
+                        // $button = '<button type="button" name="edit" id="'.$data->id.'" class="edit btn btn-primary btn-sm">Edit</button>';
+                        // $button .= '&nbsp;&nbsp;';
+                        $button = '<button type="button" name="view" id="'.$data->id.'" class="view btn btn-primary btn-md pl-4 pr-4">View</button>';
+                        return $button;
+                    })
+                    ->rawColumns(['action'])
+                    ->make(true);
+        }
+        return view('/admin/showexams');
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -40,38 +59,37 @@ class ExamController extends Controller
     public function store(Request $request)
     {
         if($request->type == 'basic') {
+            $ifExist = $request->basic_id;
             $examname = $request->examname;
             $examstarttime = $request->examstarttime;
             $examendtime = $request->examendtime;
-            // $totalquestion = $request->totalquestion;
+            $totalquestion = $request->totalquestion;
             $correctmark = $request->correctmark;
             $wrongmark = $request->wrongmark;
             $passmark = $request->passmark;
             $category = $request->category;
 
-            $ifExist = DB::table('exam_master')
-                        ->where([
-                                ['exam_name', $examname],
-                                ['exam_start_time', $examstarttime],
-                                ['exam_end_time', $examendtime],
-                                // ['total_questions', $totalquestion],
-                                ['right_mark', $correctmark],
-                                ['wrong_mark', $wrongmark],
-                                ['pass_mark', $passmark],
-                                ['category', $category],
-                            ])
-                        ->select('id')
-                        ->first();
-                        
-            if($ifExist) {            
-                return $ifExist->id;
+            if($ifExist != '') {
+                $basicDetailsID = DB::table('exam_master')
+                                    ->where('id', $ifExist)
+                                    ->update([
+                                        'exam_name' => $examname,
+                                        'exam_start_time' => $examstarttime,
+                                        'exam_end_time' => $examendtime,
+                                        'total_questions' => $totalquestion,
+                                        'right_mark' => $correctmark,
+                                        'wrong_mark' => $wrongmark,
+                                        'pass_mark' => $passmark,
+                                        'category' => $category,
+                                        ]);
+                return $ifExist;
             } else {
                 $basicDetailsID = DB::table('exam_master')
                                     ->insertGetId([
                                         'exam_name' => $examname,
                                         'exam_start_time' => $examstarttime,
                                         'exam_end_time' => $examendtime,
-                                        // 'total_questions' => $totalquestion,
+                                        'total_questions' => $totalquestion,
                                         'right_mark' => $correctmark,
                                         'wrong_mark' => $wrongmark,
                                         'pass_mark' => $passmark,
@@ -79,6 +97,45 @@ class ExamController extends Controller
                                         ]);
                 return $basicDetailsID;
             }
+        } 
+        if($request->type == 'question') {
+            $exam_id = $request->exam_id;
+
+            $qn_delete = DB::table('questions')
+                            ->where('exam_id', $exam_id)
+                            ->delete();
+            $answer_delete = DB::table('answers')
+                            ->where('exam_id', $exam_id)
+                            ->delete();
+
+            $data = $request->arrays;
+            foreach ($data as $key) {
+                $qn_name = $key[0];
+
+                $qn_id = DB::table('questions')
+                           ->insertGetId([
+                               'exam_id' => $exam_id,
+                               'qn_name' => $qn_name,
+                           ]);
+                
+                $answer_id = DB::table('answers')
+                               ->insertGetId([
+                                   'exam_id' => $exam_id,
+                                   'qn_id' => $qn_id,
+                                   'opt_a' => $key[1],
+                                   'opt_b' => $key[2],
+                                   'opt_c' => $key[3],
+                                   'opt_d' => $key[4],
+                                   'correct_ans' => $key[5],
+                               ]);
+            }
+        }
+        if($request->type == 'create') {
+            $exam_id = $request->exam_id;
+            $createExam = DB::table('exam_master')
+                            ->where('id', $exam_id)
+                            ->update(['is_active' => 1]);
+            return($createExam);
         }
     }
 
