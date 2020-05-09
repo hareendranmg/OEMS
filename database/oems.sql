@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 27, 2020 at 11:28 PM
+-- Generation Time: May 08, 2020 at 08:13 PM
 -- Server version: 5.7.29-0ubuntu0.16.04.1
--- PHP Version: 7.2.23-1+ubuntu16.04.1+deb.sury.org+1
+-- PHP Version: 7.2.30-1+ubuntu16.04.1+deb.sury.org+1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -28,15 +28,30 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `answers` (
   `ans_id` bigint(20) UNSIGNED NOT NULL,
+  `exam_id` int(11) NOT NULL,
   `qn_id` int(11) NOT NULL,
   `opt_a` varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL,
   `opt_b` varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL,
   `opt_c` varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL,
   `opt_d` varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL,
   `correct_ans` varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `answers`
+--
+
+INSERT INTO `answers` (`ans_id`, `exam_id`, `qn_id`, `opt_a`, `opt_b`, `opt_c`, `opt_d`, `correct_ans`, `created_at`) VALUES
+(24, 40, 24, 'l', 'l', 'l', 'l', 'a', '2020-05-02 19:13:55'),
+(25, 40, 25, 'k', 'k', 'k', 'k', 'a', '2020-05-02 19:13:55'),
+(26, 40, 26, 'j', 'j', 'j', 'j', 'a', '2020-05-02 19:13:55'),
+(27, 40, 27, 'p', 'p', 'p', 'p', 'a', '2020-05-02 19:13:55'),
+(28, 40, 28, 'u', 'u', 'u', 'u', 'a', '2020-05-02 19:13:55'),
+(29, 41, 29, 'k', 'k', 'k', 'k', 'a', '2020-05-02 19:34:23'),
+(30, 42, 30, 'l', 'l', 'l', 'l', 'a', '2020-05-02 19:38:27'),
+(31, 43, 31, 'j', 'j', 'j', 'jj', 'a', '2020-05-02 19:57:17'),
+(32, 44, 32, 'o', 'o', 'o', 'oo', 'a', '2020-05-02 19:57:48');
 
 -- --------------------------------------------------------
 
@@ -64,17 +79,29 @@ INSERT INTO `category` (`cat_id`, `cat_name`) VALUES
 --
 
 CREATE TABLE `exam_master` (
-  `qn_id` bigint(20) UNSIGNED NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
   `exam_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `exam_time` timestamp NULL DEFAULT NULL,
-  `total_time` int(11) NOT NULL,
-  `total_questions` int(11) NOT NULL,
+  `exam_start_time` timestamp NULL DEFAULT NULL,
+  `exam_end_time` timestamp NULL DEFAULT NULL,
+  `total_questions` int(11) DEFAULT NULL,
   `right_mark` int(11) NOT NULL,
   `wrong_mark` int(11) NOT NULL,
   `pass_mark` int(11) NOT NULL,
+  `category` int(11) NOT NULL,
   `is_active` tinyint(1) NOT NULL DEFAULT '0',
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `exam_master`
+--
+
+INSERT INTO `exam_master` (`id`, `exam_name`, `exam_start_time`, `exam_end_time`, `total_questions`, `right_mark`, `wrong_mark`, `pass_mark`, `category`, `is_active`, `created_at`) VALUES
+(40, 'exam', '2020-05-02 19:12:54', '2020-05-09 19:12:16', 5, 0, -1, 0, 1, 1, '2020-05-02 19:13:03'),
+(41, 'k', '2020-05-02 19:34:07', '2020-05-09 19:33:59', 1, 1, 1, 1, 1, 1, '2020-05-02 19:34:15'),
+(42, 'o', '2020-05-02 19:38:16', '2020-05-09 19:38:07', 1, 0, -1, 0, 1, 1, '2020-05-02 19:38:21'),
+(43, 'k', '2020-05-02 19:57:05', '2020-05-09 19:57:01', 1, 0, -1, 0, 1, 1, '2020-05-02 19:57:12'),
+(44, 'o', '2020-05-02 19:57:35', '2020-05-09 19:57:30', 1, 0, -1, 0, 1, 1, '2020-05-02 19:57:42');
 
 -- --------------------------------------------------------
 
@@ -137,9 +164,23 @@ CREATE TABLE `questions` (
   `qn_id` bigint(20) UNSIGNED NOT NULL,
   `exam_id` int(11) NOT NULL,
   `qn_name` varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `questions`
+--
+
+INSERT INTO `questions` (`qn_id`, `exam_id`, `qn_name`, `created_at`) VALUES
+(24, 40, 'l', '2020-05-02 19:13:55'),
+(25, 40, 'k', '2020-05-02 19:13:55'),
+(26, 40, 'j', '2020-05-02 19:13:55'),
+(27, 40, 'p', '2020-05-02 19:13:55'),
+(28, 40, 'u', '2020-05-02 19:13:55'),
+(29, 41, 'k', '2020-05-02 19:34:23'),
+(30, 42, 'l', '2020-05-02 19:38:27'),
+(31, 43, 'j', '2020-05-02 19:57:17'),
+(32, 44, 'o', '2020-05-02 19:57:48');
 
 -- --------------------------------------------------------
 
@@ -191,7 +232,7 @@ ALTER TABLE `category`
 -- Indexes for table `exam_master`
 --
 ALTER TABLE `exam_master`
-  ADD PRIMARY KEY (`qn_id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `failed_jobs`
@@ -231,7 +272,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `answers`
 --
 ALTER TABLE `answers`
-  MODIFY `ans_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `ans_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 --
 -- AUTO_INCREMENT for table `category`
 --
@@ -241,7 +282,7 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT for table `exam_master`
 --
 ALTER TABLE `exam_master`
-  MODIFY `qn_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 --
 -- AUTO_INCREMENT for table `failed_jobs`
 --
@@ -256,7 +297,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `questions`
 --
 ALTER TABLE `questions`
-  MODIFY `qn_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `qn_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 --
 -- AUTO_INCREMENT for table `users`
 --
