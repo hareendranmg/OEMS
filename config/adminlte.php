@@ -309,6 +309,17 @@ return [
             ],
         ],
         [
+            'name' => 'countdown',
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => '/vendor/countdowntime/countdowntime.js',
+                ],
+            ],
+        ],
+        [
             'name' => 'Datatables',
             'active' => true,
             'files' => [

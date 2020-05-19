@@ -40,23 +40,22 @@
 @section('css')
 <link rel="stylesheet" href="/css/admin_custom.css">
 <style>
-    .fc-today {
-        background: #9cacfb!important;
-    }
+.fc-today {
+    background: #9cacfb !important;
+}
 </style>
 @stop
 
 @section('js')
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        var calendarEl = document.getElementById('calendar');
+document.addEventListener('DOMContentLoaded', function() {
+    var calendarEl = document.getElementById('calendar');
 
-        var calendar = new FullCalendar.Calendar(calendarEl, {
-            plugins: ['dayGrid']
-        });
-
-        calendar.render();
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+        plugins: ['dayGrid']
     });
 
+    calendar.render();
+});
 </script>
 @stop
