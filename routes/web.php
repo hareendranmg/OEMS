@@ -33,8 +33,11 @@ Route::group(['middleware' => ['isadmin']], function () {
     Route::resource('/admin/exam', 'Admin\ExamController');
     Route::get('/admin/showexams', 'Admin\ExamController@showexams');
 });
+
 Route::group(['middleware' => ['iscandidate']], function () {
     Route::get('/candidate', 'Candidate\CandidateHomeController@index');
+    Route::get('/candidate/showexams', 'Candidate\CandidateExamController@index');
+
 });
 
 

@@ -12,20 +12,6 @@
     <div class="col-md-6">
         <div class="row" style="margin-bottom: 30px; margin-top: 20px;">
             <div class="col-md-6">
-                <div class="small-box bg-success">
-                    <div class="inner">
-                        <h3>{{$active_exams}}</h3>
-                        <p>Active Exams</p>
-                    </div>
-                    <div class="icon">
-                        <i class="fas fa-laptop-code"></i>
-                    </div>
-                    <a href="#" class="small-box-footer">
-                        More info <i class="fas fa-arrow-circle-right"></i>
-                    </a>
-                </div>
-            </div>
-            <div class="col-md-6">
                 <div class="small-box bg-teal">
                     <div class="inner">
                         <p style="margin-top: 2px">Upcoming Exam</p>
@@ -35,9 +21,23 @@
                         <i class="fas fa-paper-plane"></i>
                     </div>
                     <a href="#" class="small-box-footer">
-                    <span id="start">
-                        Starts in: <span id="clock"></span>
-                    </span>
+                        <span id="start">
+                            Starts in: <span id="clock"></span>
+                        </span>
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="small-box bg-success">
+                    <div class="inner">
+                        <p style="margin-top: 2px">Active Exam</p>
+                        <h3>{{$active_exams}}</h3>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    <a href="{{URL::to('/candidate/showexams')}}" class="small-box-footer">
+                        View All <i class="fas fa-arrow-circle-right"></i>
                     </a>
                 </div>
             </div>
@@ -96,11 +96,19 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     calendar.render();
 });
+$(document).ready(function() {
+    var cur_date = new Date();
+    var exm_date = new Date('{{$upcmng_exam->exam_start_time}}');
 
-$('#clock').countdown('{{$upcmng_exam->exam_start_time}}', function(event) {
-    $(this).html(event.strftime('%D days %H:%M:%S'));
-}).on('finish.countdown', function() {
-    $('#start').text("Start Exam")
+    if (cur_date >= exm_date) {
+        $('#start').text("Start Exam")
+    } else {
+        $('#clock').countdown('{{$upcmng_exam->exam_start_time}}', function(event) {
+            $(this).html(event.strftime('%D days %H:%M:%S'));
+        }).on('finish.countdown', function() {
+            $('#start').text("Start Exam")
+        });
+    }
 });
 </script>
 @stop
