@@ -24,7 +24,7 @@ class CandidateExamController extends Controller
                     ->where('exam_end_time', '>=', $cur_date)
                     ->get())
                 ->addColumn('action', function ($data) {
-                    $button = '<button type="button" name="attend" id="' . $data->id . '" class="attend btn btn-primary btn-md pl-4 pr-4">Attend</button>';
+                    $button = '<button type="button" name="attend" id="' . $data->id . '" class="attend btn btn-primary col">Attend</button>';
                     return $button;
                 })
                 ->rawColumns(['action'])

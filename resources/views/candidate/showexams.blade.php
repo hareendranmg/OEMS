@@ -10,10 +10,10 @@
     <table id="category" class="display" style="width:100%">
         <thead>
             <tr>
-                <th width="30%">Category Name</th>
                 <th width="30%">Exam Name</th>
-                <th width="25%">Exam Date&time</th>
-                <th width="15%">Action</th>
+                <th width="20%">Exam Start Time</th>
+                <th width="20%">Exam End Time</th>
+                <th width="20%" class="text-center">Action</th>
             </tr>
         </thead>
     </table>
@@ -23,7 +23,6 @@
 @section('content')
 
 @stop
-
 
 @section('js')
 <script>
@@ -35,16 +34,16 @@
   },
   columns:[
    {
-    data: 'total_questions',
-    name: 'total_questions'
-   },
-   {
     data: 'exam_name',
     name: 'exam_name'
    },
    {
     data: 'exam_start_time',
     name: 'exam_start_time'
+   },
+   {
+    data: 'exam_end_time',
+    name: 'exam_end_time'
    },
    {
     data: 'action',
