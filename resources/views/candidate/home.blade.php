@@ -15,7 +15,7 @@
                 <div class="small-box bg-teal">
                     <div class="inner">
                         <p style="margin-top: 2px">Upcoming Exam</p>
-                        <h3>{{$upcmng_exam->exam_name}}</h3>
+                        <h3>{{(isset($upcmng_exam->exam_name))? $upcmng_exam->exam_name: print_r("No new exam")}}</h3>
                     </div>
                     <div class="icon">
                         <i class="fas fa-paper-plane"></i>
@@ -98,12 +98,12 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 $(document).ready(function() {
     var cur_date = new Date();
-    var exm_date = new Date('{{$upcmng_exam->exam_start_time}}');
+    var exm_date = new Date('{{(isset($upcmng_exam->exam_start_time))? $upcmng_exam->exam_start_time: date("Y-m-d H:i:s")}}');
 
     if (cur_date >= exm_date) {
-        $('#start').text("Start Exam")
+        $('#start').text("No Exam")
     } else {
-        $('#clock').countdown('{{$upcmng_exam->exam_start_time}}', function(event) {
+        $('#clock').countdown(exm_date, function(event) {
             $(this).html(event.strftime('%D days %H:%M:%S'));
         }).on('finish.countdown', function() {
             $('#start').text("Start Exam")

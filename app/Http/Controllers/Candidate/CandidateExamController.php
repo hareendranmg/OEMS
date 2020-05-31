@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Auth;
 use DB;
 use Illuminate\Http\Request;
+use Crypt;
+use URL;
 
 class CandidateExamController extends Controller
 {
@@ -24,12 +26,38 @@ class CandidateExamController extends Controller
                     ->where('exam_end_time', '>=', $cur_date)
                     ->get())
                 ->addColumn('action', function ($data) {
-                    $button = '<button type="button" name="attend" id="' . $data->id . '" class="attend btn btn-primary col">Attend</button>';
+                    $url = URL::to('candidate/takeexam?exam_id='.Crypt::encrypt($data->id)); 
+                    $button = '<a id="' . Crypt::encrypt($data->id) . '" class="attend btn btn-primary col" href="'.$url.'">Attend</a>';
                     return $button;
                 })
                 ->rawColumns(['action'])
                 ->make(true);
         }
         return view('/candidate/showexams');
+    }
+
+    public function takeExam(Request $request)
+    {
+        $exam_id = Crypt::decrypt($request->exam_id);
+        $questions = DB::table('questions')
+                      ->where('exam_id', $exam_id)
+                      ->get();
+
+        $answers = DB::table('answers')
+                     ->where('exam_id', $exam_id)
+                     ->get();
+
+        $qnrs = [];
+        foreach ($questions as $question) {
+            foreach ($answers as $answer) {
+                if($question->qn_id == $answer->qn_id) {
+                    array_push($qnrs, ['qn' => $question, 'ans' => $answer]);
+                }
+            }
+        }
+
+        // print_r(json_encode($qnr));
+                      
+        return view('/candidate/takeexam', compact('qnrs'));
     }
 }

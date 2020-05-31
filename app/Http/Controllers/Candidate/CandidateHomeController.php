@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Candidate;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Auth;
 use DB;
@@ -30,17 +29,19 @@ class CandidateHomeController extends Controller
         $cur_date = date("Y-m-d H:i:s");
         $cat_id = Auth::user()->cat_id;
         $active_exams = DB::table('exam_master')
-                        ->where('category', $cat_id)
-                        ->where('is_active', 1)
-                        ->count();
+            ->where('category', $cat_id)
+            ->where('is_active', 1)
+            ->where('exam_start_time', '<=', $cur_date)
+            ->where('exam_end_time', '>=', $cur_date)
+            ->count();
 
         $upcmng_exam = DB::table('exam_master')
-                        ->where('category', $cat_id)
-                        ->where('is_active', 1)
-                        ->where('exam_start_time', '>', $cur_date)
-                        // ->latest()
-                        ->select('exam_name', 'exam_start_time')
-                        ->first();
+            ->where('category', $cat_id)
+            ->where('is_active', 1)
+            ->where('exam_start_time', '>', $cur_date)
+        // ->latest()
+            ->select('exam_name', 'exam_start_time')
+            ->first();
 
         // $active_exam = DB::table('exam_master')
         //                 ->where('category', $cat_id)
