@@ -60,4 +60,35 @@ class CandidateExamController extends Controller
                       
         return view('/candidate/takeexam', compact('qnrs'));
     }
+
+    public function submitExam(Request $request)
+    {
+        $data = $request->validate([
+            'responses.*.answer_id' => 'required'
+        ], ['required' => 'Please select the answer.']);
+
+        $candidate_id = Auth::user()->id;
+
+        foreach ($request->responses as $key => $value) {
+            $qn_id  = $value['question_id'];
+            $exm_id = $value['exam_id'];
+            $ans = $value['answer_id'];
+
+            $ans_id = DB::table('answers')
+                        ->where('exam_id', $exm_id)
+                        ->where('qn_id', $qn_id)
+                        ->select('opt_a', 'opt_b', 'opt_c', 'opt_d')
+                        ->first();
+            
+            $ans_opt = ($ans_id->opt_a == $ans)? 'a': (($ans_id->opt_b == $ans)? 'b': (($ans_id->opt_c == $ans)? 'c': 'd')); 
+
+            $insert_res = DB::table('responses')
+                            ->insert(['candidate_id' => $candidate_id,
+                                      'exam_id' => $exm_id,        
+                                      'qn_id' => $qn_id,        
+                                      'ans_opt' => $ans_opt,        
+                            ]);
+
+        }
+    }
 }
