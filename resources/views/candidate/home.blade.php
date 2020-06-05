@@ -46,7 +46,7 @@
             <div class="col-md-6">
                 <div class="small-box bg-primary">
                     <div class="inner">
-                        <h3>44</h3>
+                        <h3>122</h3>
                         <p>Attended Exams</p>
                     </div>
                     <div class="icon">
