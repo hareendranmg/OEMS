@@ -88,7 +88,8 @@ class CandidateExamController extends Controller
                                       'qn_id' => $qn_id,        
                                       'ans_opt' => $ans_opt,        
                             ]);
-
         }
+        $status = 'success';
+        return view('candidate/attended_exams', compact('status'));
     }
 }

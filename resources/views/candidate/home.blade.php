@@ -52,7 +52,7 @@
                     <div class="icon">
                         <i class="fas fa-pen"></i>
                     </div>
-                    <a href="#" class="small-box-footer">
+                    <a href="{{URL::to('/candidate/attended_exams')}}" class="small-box-footer">
                         More info <i class="fas fa-arrow-circle-right"></i>
                     </a>
                 </div>

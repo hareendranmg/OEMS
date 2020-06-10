@@ -39,6 +39,7 @@ Route::group(['middleware' => ['iscandidate']], function () {
     Route::get('/candidate/showexams', 'Candidate\CandidateExamController@index');
     Route::get('/candidate/takeexam', 'Candidate\CandidateExamController@takeExam');
     Route::post('/candidate/submit_exam', 'Candidate\CandidateExamController@submitExam');
+    Route::get('/candidate/attended_exams', 'Candidate\PostExamController@attendedExams');
 
 });
 
