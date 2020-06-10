@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use DB;
 use Carbon;
+use Crypt;
+use URL;
 
 class ExamController extends Controller
 {
@@ -29,9 +31,8 @@ class ExamController extends Controller
                                 ->join('category', 'category.cat_id', 'exam_master.category')
                                 ->get())
                     ->addColumn('action', function($data){
-                        // $button = '<button type="button" name="edit" id="'.$data->id.'" class="edit btn btn-primary btn-sm">Edit</button>';
-                        // $button .= '&nbsp;&nbsp;';
-                        $button = '<button type="button" name="view" id="'.$data->id.'" class="view btn btn-primary btn-md pl-4 pr-4">View</button>';
+                        $url = URL::to('admin/edit_exam?exam_id='.Crypt::encrypt($data->id));
+                        $button = '<a id="'.Crypt::encrypt($data->id).'" href='.$url.' class="view btn btn-primary btn-md pl-4 pr-4">Edit Exam</a>';
                         return $button;
                     })
                     ->rawColumns(['action'])
@@ -40,22 +41,6 @@ class ExamController extends Controller
         return view('/admin/showexams');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         if($request->type == 'basic') {
@@ -139,48 +124,26 @@ class ExamController extends Controller
         }
     }
 
-    /**
-     *
-     * Display the specified resource.
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function editExam(Request $request)
     {
-        //
-    }
+        $exam_id = Crypt::decrypt($request->exam_id);
+        $exam_det = DB::table('exam_master')
+                      ->where('id', $exam_id)
+                      ->first();
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
+        $qn_det = DB::table('questions')
+                    ->join('answers', 'answers.qn_id', 'questions.qn_id')
+                    ->where('questions.exam_id', $exam_id)
+                    ->get();
+        
+        $exam_det = json_decode(json_encode($exam_det), true);
+        $qn_det = json_decode(json_encode($qn_det), true);
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
+        $categories = DB::table('category')
+                        ->get();
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+
+        return view('admin.edit_exam', compact('exam_det','qn_det', 'categories'));
+
     }
 }
