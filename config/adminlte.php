@@ -258,6 +258,11 @@ return [
                     'url'         => 'admin/showexams',
                     'icon'        => 'users',
                 ],
+                [
+                    'text'        => 'Finished Exams',
+                    'url'         => 'admin/finished_exams',
+                    'icon'        => 'users',
+                ],
             ],
         ],
     ],
