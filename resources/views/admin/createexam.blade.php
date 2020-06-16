@@ -72,7 +72,7 @@
                                     <div class="col-sm-8">
                                         <input type="number" onkeyup="if(!this.checkValidity()){this.value='';};"
                                             class="form-control" id="correctmark" name="correctmark"
-                                            placeholder="Mark for correct answer" min="0">
+                                            placeholder="Mark for correct answer" min="1">
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -80,7 +80,7 @@
                                     <div class="col-sm-8">
                                         <input type="number" onkeyup="if(!this.checkValidity()){this.value='';};"
                                             class="form-control" id="wrongmark" name="wrongmark"
-                                            placeholder="Mark for wrong answer" min="-10">
+                                            placeholder="Mark for wrong answer" min="0">
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -88,7 +88,7 @@
                                     <div class="col-sm-8">
                                         <input type="number" onkeyup="if(!this.checkValidity()){this.value='';};"
                                             class="form-control" id="passmark" name="passmark"
-                                            placeholder="Mark for pass exam" min="0">
+                                            placeholder="Mark for pass exam" min="1">
                                     </div>
                                 </div>
                                 <div class="form-group row">

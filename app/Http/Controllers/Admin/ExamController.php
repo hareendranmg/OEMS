@@ -7,6 +7,7 @@ use Crypt;
 use DB;
 use Illuminate\Http\Request;
 use URL;
+use Illuminate\Support\Collection;
 
 class ExamController extends Controller
 {
@@ -196,11 +197,22 @@ class ExamController extends Controller
         if (request()->ajax()) {
             $exam_id = $request->exam_id;
             $ans_det_arr = [];
+            $cand_res_det = new Collection;
+
+            $exam_det = DB::table('exam_master')
+                          ->where('id', $exam_id)
+                          ->first();
+
+            $total_qns = $exam_det->total_questions;
+            $right_mark = $exam_det->right_mark;
+            $wrong_mark = $exam_det->wrong_mark;
+            $pass_mark = $exam_det->pass_mark;
 
             $correct_ans_det = DB::table('answers')
                 ->where('exam_id', $exam_id)
                 ->select('exam_id', 'qn_id', 'correct_ans')
                 ->get();
+
             $correct_ans_det = json_decode(json_encode($correct_ans_det), true);
             $combined = [];
 
@@ -211,39 +223,42 @@ class ExamController extends Controller
                 ->select('candidate_id', 'name')
                 ->get();
 
-            foreach ($candidates_det as $candidate_det) {
+            foreach ($candidates_det as $key => $candidate_det) {
                 $cand_ans_det = DB::table('responses')
                     ->where('exam_id', $exam_id)
                     ->where('candidate_id', $candidate_det->candidate_id)
                     ->select('candidate_id', 'qn_id', 'ans_opt')
                     ->get();
                 $cand_ans_det = json_decode(json_encode($cand_ans_det), true);
-                $correct = 0;
+                $correct_ans = 0;
 
                 foreach ($cand_ans_det as $key => $cand_ans) {
                     if (array_key_exists($key, $correct_ans_det) && $cand_ans['qn_id'] == $correct_ans_det[$key]['qn_id']) {
-                        if($correct_ans_det[$key]['correct_ans'] == $cand_ans['ans_opt']) $correct++;
+                        if($correct_ans_det[$key]['correct_ans'] == $cand_ans['ans_opt']) $correct_ans++;
                         $combined[$cand_ans['qn_id']] = ['crct_ans' => $correct_ans_det[$key]['correct_ans'], 'ans_opt' => $cand_ans['ans_opt']];
                     }
                 }
 
+                $wrong_ans = $total_qns - $correct_ans;
 
-                // $cand_ans_det = array_merge($correct_ans_det, $cand_ans_det);
+                $mark = ($correct_ans * $right_mark) - ($wrong_ans * $wrong_mark);
+                $result = ($mark >= $pass_mark)? 'Passed': 'Failed'; 
 
-                dump($mark);
-                dd($combined);
-                dd($cand_ans_det);
-                array_push($ans_det_arr, $cand_ans_det);
+                $cand_res_det->push([
+                    'no' => $key,
+                    'name' => $candidate_det->name,
+                    'correct_ans' => $correct_ans,
+                    'right_mark' => $right_mark,
+                    'wrong_ans' => $wrong_ans,
+                    'wrong_mark' => $wrong_mark,
+                    'mark' => $mark,
+                    'result' => $result,
+                ]);
             }
 
-            dd($correct_ans_det);
+            // dd($cand_res_det);
 
-            // $marks_det = DB::table('responses')
-            //             ->select('')
-
-            //         dd($candidates);
-
-            return datatables()->of($candidates)
+            return datatables()->of($cand_res_det)
                 ->addColumn('action', function ($data) {
                     // $url = URL::to('admin/finished_exam?exam_id=' . Crypt::encrypt($data->id));
                     // $button = '<a id="' . Crypt::encrypt($data->id) . '" href=' . $url . ' class="view btn btn-primary btn-md pl-4 pr-4">View Result</a>';

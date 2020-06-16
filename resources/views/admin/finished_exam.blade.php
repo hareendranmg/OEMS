@@ -76,7 +76,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="tab-pane fade" id="result" role="tabpanel" aria-labelledby="result-tab">
+                <div class="tab-pane fade" id="result" aria-labelledby="result-tab">
                     <table class="table" id="result_table">
                         <thead>
                             <tr>
@@ -112,21 +112,22 @@ function getTable() {
     $('#result_table').DataTable({
         processing: true,
         serverSide: true,
+        bAutoWidth: false,
         ajax: {
             url: "candidate_result",
             data: { exam_id: exam_id }
         },
         columns: [{
-                data: 'res_id',
+                data: 'no',
             },
             {
-                data: 'res_id',
+                data: 'name',
             },
             {
-                data: 'res_id',
+                data: 'mark',
             },
             {
-                data: 'res_id',
+                data: 'result',
             },
             {
                 data: 'action',
