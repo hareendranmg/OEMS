@@ -21,6 +21,7 @@
                     <a class="nav-link" id="result-tab" data-toggle="tab" href="#result" role="tab"
                         aria-controls="result" aria-selected="false">Result</a>
                 </li>
+                <a class="nav-link" id="exam_report" target="_blank" href="pdf_exam_report?exam_id={{ \Crypt::encrypt($exam_det->id) }}">Exam Report</a>
             </ul>
         </div>
         <!-- /.col-md-4 -->
@@ -71,7 +72,8 @@
                             <p class="col-sm-8">{{$total_candidates}}</p>
                         </div>
                         <div class="form-group row">
-                            <label for="examendtime" class="col-sm-4 col-form-label">No of Students Attended Exam</label>
+                            <label for="examendtime" class="col-sm-4 col-form-label">No of Students Attended
+                                Exam</label>
                             <p class="col-sm-8">{{$attended_candidates}}</p>
                         </div>
                     </div>
@@ -84,7 +86,7 @@
                                 <th>Candidate Name</th>
                                 <th>Mark</th>
                                 <th>Result</th>
-                                <th>Action</th>
+                                <!-- <th>Action</th> -->
                             </tr>
                         </thead>
                     </table>
@@ -108,14 +110,16 @@ $(function() {
 });
 
 function getTable() {
-    var exam_id = {{$exam_det->id}};
+    var exam_id = {{ $exam_det->id }};
     $('#result_table').DataTable({
         processing: true,
         serverSide: true,
         bAutoWidth: false,
         ajax: {
             url: "candidate_result",
-            data: { exam_id: exam_id }
+            data: {
+                exam_id: exam_id
+            }
         },
         columns: [{
                 data: 'no',
@@ -129,10 +133,10 @@ function getTable() {
             {
                 data: 'result',
             },
-            {
-                data: 'action',
-                orderable: false
-            }
+            // {
+            //     data: 'action',
+            //     orderable: false
+            // }
         ],
         fnRowCallback: function(nRow, aData, iDisplayIndex) {
             $("td:first", nRow).html(iDisplayIndex + 1);

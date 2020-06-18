@@ -36,6 +36,7 @@ Route::group(['middleware' => ['isadmin']], function () {
     Route::get('/admin/finished_exams', 'Admin\ExamController@finishedExams');
     Route::get('/admin/finished_exam', 'Admin\ExamController@finishedExam');
     Route::get('/admin/candidate_result', 'Admin\ExamController@candidateResult');
+    Route::resource('/admin/pdf_exam_report', 'Admin\PDFGenerateController');
 });
 
 Route::group(['middleware' => ['iscandidate']], function () {
