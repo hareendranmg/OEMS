@@ -15,10 +15,10 @@
 <table id="attended_exams" class="display" style="width:100%">
     <thead>
         <tr>
-            <th width="10%">SL No</th>
-            <th width="30%">Exam Name</th>
-            <th width="20%">Exam Date</th>
-            <th width="20%" class="text-center">Action</th>
+            <th>Sl No</th>
+            <th>Exam Name</th>
+            <th>Mark</th>
+            <th>Result</th>
         </tr>
     </thead>
 </table>
@@ -45,7 +45,10 @@ function getTable() {
                 data: 'exam_name',
             },
             {
-                data: 'exam_date',
+                data: 'mark',
+            },
+            {
+                data: 'result',
             },
             {
                 data: 'action',

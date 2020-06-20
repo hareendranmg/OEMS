@@ -15,7 +15,7 @@
                 <div class="small-box bg-teal">
                     <div class="inner">
                         <p style="margin-top: 2px">Upcoming Exam</p>
-                        <h3>{{(isset($upcmng_exam->exam_name))? $upcmng_exam->exam_name: print_r("No new exam")}}</h3>
+                        <h3>{{($upcmng_exam)? $upcmng_exam->exam_name: "No New Exams"}}</h3>
                     </div>
                     <div class="icon">
                         <i class="fas fa-paper-plane"></i>
@@ -46,7 +46,7 @@
             <div class="col-md-6">
                 <div class="small-box bg-primary">
                     <div class="inner">
-                        <h3>122</h3>
+                        <h3>{{($attended_exams)? $attended_exams: "No Exams"}}</h3>
                         <p>Attended Exams</p>
                     </div>
                     <div class="icon">

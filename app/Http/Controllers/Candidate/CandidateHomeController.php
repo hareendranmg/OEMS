@@ -43,14 +43,11 @@ class CandidateHomeController extends Controller
             ->select('exam_name', 'exam_start_time')
             ->first();
 
-        // $active_exam = DB::table('exam_master')
-        //                 ->where('category', $cat_id)
-        //                 ->where('is_active', 1)
-        //                 ->where('exam_start_time', '>=', $cur_date)  //2020-05-20 21:00 <= 2020-05-20 21:30 <= 2020-05-20 22:00
-        //                 ->where('exam_end_time', '>=', $cur_date)
-        //                 ->select('exam_name')
-        //                 ->first();
+        $attended_exams = DB::table('responses')
+                        ->where('candidate_id', Auth::user()->id)
+                        ->distinct('exam_id')
+                        ->count();
 
-        return view('/candidate/home', compact('active_exams', 'upcmng_exam'));
+        return view('/candidate/home', compact('active_exams', 'upcmng_exam', 'attended_exams'));
     }
 }
