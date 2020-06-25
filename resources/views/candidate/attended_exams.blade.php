@@ -27,7 +27,7 @@
 
 @section('js')
 <script>
-$(function() {
+$(document).ready(function () {
     getTable();
 });
 
@@ -50,10 +50,6 @@ function getTable() {
             {
                 data: 'result',
             },
-            {
-                data: 'action',
-                orderable: false
-            }
         ],
         fnRowCallback: function(nRow, aData, iDisplayIndex) {
             $("td:first", nRow).html(iDisplayIndex + 1);

@@ -4,42 +4,86 @@ namespace App\Http\Controllers\candidate;
 
 use App\Http\Controllers\Controller;
 use Auth;
-use Crypt;
+use Collection;
 use DB;
 use Illuminate\Http\Request;
-use URL;
 
 class PostExamController extends Controller
 {
     public function attendedExams(Request $request)
     {
         if (request()->ajax()) {
-            $attended_exams = DB::table('responses')
-                ->where('candidate_id', Auth::user()->id)
-                ->select('exam_id')
-                ->distinct()
+            $cand_id = Auth::user()->id;
+
+            $ans_det_arr = [];
+            $cand_res_det = new Collection;
+
+            $attmted_exams = DB::table('responses')
+                ->where('candidate_id', $cand_id)
+                ->distinct('exam_id')
                 ->get();
 
-            $attended_exams= json_decode(json_encode($attended_exams), true);
+            foreach ($attmted_exams as $attmted_exam) {
+                $exam_det = DB::table('exam_master')
+                    ->where('id', $attmted_exam->exam_id)
+                    ->first();
 
-            $exam_det = DB::table('exam_master')
-                ->whereIn('id', $attended_exams)
-                ->select('id', 'exam_name', 'exam_start_time')
-                ->get();
+                $total_qns = $exam_det->total_questions;
+                $right_mark = $exam_det->right_mark;
+                $wrong_mark = $exam_det->wrong_mark;
+                $pass_mark = $exam_det->pass_mark;
 
-            return datatables()->of($exam_det)
-                ->addColumn('exam_date', function($data) {
-                        $exam_date = date_format(date_create($data->exam_start_time), "Y-m-d");
-                        return $exam_date;
-                    })
-                ->addColumn('action', function ($data) {
-                    $url = URL::to('candidate/view_result?exam_id=' . Crypt::encrypt($data->id));
-                    $button = '<a id="' . Crypt::encrypt($data->id) . '" class="attend btn btn-primary col" href="' . $url . '">View Result</a>';
-                    return $button;
-                })
-                ->rawColumns(['action'])
-                ->make(true);
+                $correct_ans_det = DB::table('answers')
+                    ->where('exam_id', $attmted_exam->exam_id)
+                    ->select('exam_id', 'qn_id', 'correct_ans')
+                    ->get();
 
+                $correct_ans_det = json_decode(json_encode($correct_ans_det), true);
+                $combined = [];
+
+                $cand_ans_det = DB::table('responses')
+                    ->where('exam_id', $attmted_exam->exam_id)
+                    ->where('candidate_id', $cand_id)
+                    ->select('candidate_id', 'qn_id', 'ans_opt')
+                    ->first();
+                $cand_ans_det = json_decode(json_encode($cand_ans_det), true);
+                $correct_ans = 0;
+
+                foreach ($correct_ans_det as $key => $crct_ans) {
+                    if (array_key_exists($key, $cand_ans_det) && $crct_ans['qn_id'] == $cand_ans_det[$key]['qn_id']) {
+                        if ($crct_ans[$key]['correct_ans'] == $cand_ans_det['ans_opt']) {
+                            $correct_ans++;
+                        }
+                        $combined[$cand_ans_det['qn_id']] = ['crct_ans' => $crct_ans[$key]['correct_ans'], 'ans_opt' => $cand_ans['ans_opt']];
+                    }
+                }
+                // foreach ($cand_ans_det as $key => $cand_ans) {
+                //     if (array_key_exists($key, $correct_ans_det) && $cand_ans['qn_id'] == $correct_ans_det[$key]['qn_id']) {
+                //         if ($correct_ans_det[$key]['correct_ans'] == $cand_ans['ans_opt']) {
+                //             $correct_ans++;
+                //         }
+                //         $combined[$cand_ans['qn_id']] = ['crct_ans' => $correct_ans_det[$key]['correct_ans'], 'ans_opt' => $cand_ans['ans_opt']];
+                //     }
+                // }
+
+                $wrong_ans = $total_qns - $correct_ans;
+
+                $mark = ($correct_ans * $right_mark) - ($wrong_ans * $wrong_mark);
+                $result = ($mark >= $pass_mark) ? 'Passed' : 'Failed';
+            }
+
+            $cand_res_det->push([
+                'correct_ans' => $correct_ans,
+                'right_mark' => $right_mark,
+                'wrong_ans' => $wrong_ans,
+                'wrong_mark' => $wrong_mark,
+                'mark' => $mark,
+                'result' => $result,
+            ]);
+
+            dd($cand_res_det);
+
+            return $cand_res_det;
         }
         return view('candidate.attended_exams');
     }
