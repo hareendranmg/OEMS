@@ -1,13 +1,15 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.4.1deb2ubuntu2.1
--- http://www.phpmyadmin.net
+-- version 4.9.5deb2
+-- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: May 08, 2020 at 08:13 PM
--- Server version: 5.7.29-0ubuntu0.16.04.1
--- PHP Version: 7.2.30-1+ubuntu16.04.1+deb.sury.org+1
+-- Host: localhost:3306
+-- Generation Time: Jun 29, 2020 at 04:10 PM
+-- Server version: 8.0.20-0ubuntu0.20.04.1
+-- PHP Version: 7.2.31-1+ubuntu20.04.1+deb.sury.org+1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -27,14 +29,14 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `answers` (
-  `ans_id` bigint(20) UNSIGNED NOT NULL,
-  `exam_id` int(11) NOT NULL,
-  `qn_id` int(11) NOT NULL,
-  `opt_a` varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `opt_b` varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `opt_c` varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `opt_d` varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `correct_ans` varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `ans_id` bigint UNSIGNED NOT NULL,
+  `exam_id` int NOT NULL,
+  `qn_id` int NOT NULL,
+  `opt_a` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `opt_b` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `opt_c` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `opt_d` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `correct_ans` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -51,7 +53,33 @@ INSERT INTO `answers` (`ans_id`, `exam_id`, `qn_id`, `opt_a`, `opt_b`, `opt_c`, 
 (29, 41, 29, 'k', 'k', 'k', 'k', 'a', '2020-05-02 19:34:23'),
 (30, 42, 30, 'l', 'l', 'l', 'l', 'a', '2020-05-02 19:38:27'),
 (31, 43, 31, 'j', 'j', 'j', 'jj', 'a', '2020-05-02 19:57:17'),
-(32, 44, 32, 'o', 'o', 'o', 'oo', 'a', '2020-05-02 19:57:48');
+(32, 44, 32, 'o', 'o', 'o', 'oo', 'a', '2020-05-02 19:57:48'),
+(33, 45, 33, 'k', 'k', 'k', 'k', 'a', '2020-05-08 16:05:56'),
+(34, 46, 34, 'l', 'l', 'l', 'l', 'a', '2020-05-09 09:21:26'),
+(35, 47, 35, 'h', 'hjg', 'hjg', 'hjg', 'a', '2020-05-18 05:19:56'),
+(36, 48, 36, '3', '3', '33', '3', 'a', '2020-05-18 17:15:29'),
+(37, 49, 37, 'l', 'l', 'l', 'l', 'a', '2020-05-20 15:55:47'),
+(38, 50, 38, 'option one a', 'option one b', 'option one c', 'option one d', 'a', '2020-05-31 16:34:16'),
+(39, 50, 39, 'option two a', 'option one b', 'option two c', 'option two d', 'b', '2020-05-31 16:34:16'),
+(40, 50, 40, 'option three a', 'option three b', 'option three c', 'option three d', 'c', '2020-05-31 16:34:17'),
+(41, 50, 41, 'option four a', 'option four b', 'option four c', 'option four d', 'd', '2020-05-31 16:34:18'),
+(42, 50, 42, 'option five a', 'option five b', 'option five c', 'option five d', 'a', '2020-05-31 16:34:19'),
+(43, 57, 43, 'option one a', 'option one b', 'option one c', 'option one d', 'a', '2020-06-10 16:09:35'),
+(44, 57, 44, 'option two a', 'option one b', 'option two c', 'option two d', 'b', '2020-06-10 16:09:35'),
+(45, 57, 45, 'option three a', 'option three b', 'option three c', 'option three d', 'c', '2020-06-10 16:09:35'),
+(46, 57, 46, 'option four a', 'option four b', 'option four c', 'option four d', 'd', '2020-06-10 16:09:35'),
+(47, 57, 47, 'option five a', 'option five b', 'option five c', 'option five d', 'a', '2020-06-10 16:09:35'),
+(48, 57, 48, 'option six a', 'option six b', 'option six c', 'option six d', 'b', '2020-06-10 16:09:36'),
+(49, 58, 49, 'l', 'l', 'l', 'l', 'a', '2020-06-10 16:17:10'),
+(50, 58, 50, 'k', 'k', 'k', 'k', 'a', '2020-06-10 16:17:10'),
+(51, 58, 51, 'j', 'j', 'j', 'j', 'a', '2020-06-10 16:17:11'),
+(52, 58, 52, 'p', 'p', 'p', 'p', 'a', '2020-06-10 16:17:11'),
+(53, 58, 53, 'u', 'u', 'u', 'u', 'a', '2020-06-10 16:17:11'),
+(54, 59, 54, 'kjbkjb', 'jkbjkbkj', 'kjbkjb', 'kjbkjb', 'a', '2020-06-29 07:16:42'),
+(55, 59, 55, 'jhvjhvb', 'hbhjbjhb', 'jhbjhbjh', 'jhbjhb', 'b', '2020-06-29 07:16:42'),
+(56, 59, 56, 'kjhbhbmb', 'mnb', 'mnbm', 'nb', 'c', '2020-06-29 07:16:42'),
+(57, 59, 57, 'kgkjhkjhkjh', 'jkhj', 'khjkhjkhjk', 'hkjhkjhjk', 'd', '2020-06-29 07:16:42'),
+(58, 59, 58, 'jgjhgjhgjh', 'hj', 'ghjghjghjg', 'hgjhghjg', 'a', '2020-06-29 07:16:42');
 
 -- --------------------------------------------------------
 
@@ -60,7 +88,7 @@ INSERT INTO `answers` (`ans_id`, `exam_id`, `qn_id`, `opt_a`, `opt_b`, `opt_c`, 
 --
 
 CREATE TABLE `category` (
-  `cat_id` int(11) NOT NULL,
+  `cat_id` int NOT NULL,
   `cat_name` varchar(500) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -70,7 +98,7 @@ CREATE TABLE `category` (
 
 INSERT INTO `category` (`cat_id`, `cat_name`) VALUES
 (1, 'Computer'),
-(2, 'ffgdfhdf');
+(2, 'Electronics');
 
 -- --------------------------------------------------------
 
@@ -79,15 +107,15 @@ INSERT INTO `category` (`cat_id`, `cat_name`) VALUES
 --
 
 CREATE TABLE `exam_master` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `exam_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` bigint UNSIGNED NOT NULL,
+  `exam_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `exam_start_time` timestamp NULL DEFAULT NULL,
   `exam_end_time` timestamp NULL DEFAULT NULL,
-  `total_questions` int(11) DEFAULT NULL,
-  `right_mark` int(11) NOT NULL,
-  `wrong_mark` int(11) NOT NULL,
-  `pass_mark` int(11) NOT NULL,
-  `category` int(11) NOT NULL,
+  `total_questions` int DEFAULT NULL,
+  `right_mark` int NOT NULL,
+  `wrong_mark` int NOT NULL,
+  `pass_mark` int NOT NULL,
+  `category` int NOT NULL,
   `is_active` tinyint(1) NOT NULL DEFAULT '0',
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -97,62 +125,7 @@ CREATE TABLE `exam_master` (
 --
 
 INSERT INTO `exam_master` (`id`, `exam_name`, `exam_start_time`, `exam_end_time`, `total_questions`, `right_mark`, `wrong_mark`, `pass_mark`, `category`, `is_active`, `created_at`) VALUES
-(40, 'exam', '2020-05-02 19:12:54', '2020-05-09 19:12:16', 5, 0, -1, 0, 1, 1, '2020-05-02 19:13:03'),
-(41, 'k', '2020-05-02 19:34:07', '2020-05-09 19:33:59', 1, 1, 1, 1, 1, 1, '2020-05-02 19:34:15'),
-(42, 'o', '2020-05-02 19:38:16', '2020-05-09 19:38:07', 1, 0, -1, 0, 1, 1, '2020-05-02 19:38:21'),
-(43, 'k', '2020-05-02 19:57:05', '2020-05-09 19:57:01', 1, 0, -1, 0, 1, 1, '2020-05-02 19:57:12'),
-(44, 'o', '2020-05-02 19:57:35', '2020-05-09 19:57:30', 1, 0, -1, 0, 1, 1, '2020-05-02 19:57:42');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `failed_jobs`
---
-
-CREATE TABLE `failed_jobs` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `connection` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `failed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `migrations`
---
-
-CREATE TABLE `migrations` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `batch` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `migrations`
---
-
-INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
-(1, '2014_10_12_000000_create_users_table', 1),
-(2, '2014_10_12_100000_create_password_resets_table', 1),
-(3, '2019_08_19_000000_create_failed_jobs_table', 1),
-(4, '2020_04_25_153828_create_exam_master', 1),
-(5, '2020_04_25_153908_create_questions', 1),
-(6, '2020_04_25_153920_create_answers', 1);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `password_resets`
---
-
-CREATE TABLE `password_resets` (
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+(59, 'syama_exam', '2020-06-29 07:15:01', '2020-07-01 07:16:01', 5, 1, 0, 3, 1, 1, '2020-06-29 07:15:32');
 
 -- --------------------------------------------------------
 
@@ -161,9 +134,9 @@ CREATE TABLE `password_resets` (
 --
 
 CREATE TABLE `questions` (
-  `qn_id` bigint(20) UNSIGNED NOT NULL,
-  `exam_id` int(11) NOT NULL,
-  `qn_name` varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `qn_id` bigint UNSIGNED NOT NULL,
+  `exam_id` int NOT NULL,
+  `qn_name` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -172,15 +145,67 @@ CREATE TABLE `questions` (
 --
 
 INSERT INTO `questions` (`qn_id`, `exam_id`, `qn_name`, `created_at`) VALUES
-(24, 40, 'l', '2020-05-02 19:13:55'),
-(25, 40, 'k', '2020-05-02 19:13:55'),
-(26, 40, 'j', '2020-05-02 19:13:55'),
-(27, 40, 'p', '2020-05-02 19:13:55'),
-(28, 40, 'u', '2020-05-02 19:13:55'),
+(24, 40, 'Question one', '2020-05-02 19:13:55'),
+(25, 40, 'Question two', '2020-05-02 19:13:55'),
+(26, 40, 'Question three', '2020-05-02 19:13:55'),
+(27, 40, 'Question four', '2020-05-02 19:13:55'),
+(28, 40, 'Question five', '2020-05-02 19:13:55'),
 (29, 41, 'k', '2020-05-02 19:34:23'),
 (30, 42, 'l', '2020-05-02 19:38:27'),
 (31, 43, 'j', '2020-05-02 19:57:17'),
-(32, 44, 'o', '2020-05-02 19:57:48');
+(32, 44, 'o', '2020-05-02 19:57:48'),
+(33, 45, 'k', '2020-05-08 16:05:56'),
+(34, 46, 'lLlllLl', '2020-05-09 09:21:26'),
+(35, 47, 'jhghjh', '2020-05-18 05:19:56'),
+(36, 48, '3', '2020-05-18 17:15:29'),
+(37, 49, 'l', '2020-05-20 15:55:47'),
+(38, 50, 'Question one', '2020-05-31 16:34:15'),
+(39, 50, 'Question two', '2020-05-31 16:34:16'),
+(40, 50, 'Question three', '2020-05-31 16:34:17'),
+(41, 50, 'Question four', '2020-05-31 16:34:18'),
+(42, 50, 'Question five', '2020-05-31 16:34:18'),
+(43, 57, 'Question one', '2020-06-10 16:09:35'),
+(44, 57, 'Question two', '2020-06-10 16:09:35'),
+(45, 57, 'Question three', '2020-06-10 16:09:35'),
+(46, 57, 'Question four', '2020-06-10 16:09:35'),
+(47, 57, 'Question five', '2020-06-10 16:09:35'),
+(48, 57, 'Question six', '2020-06-10 16:09:35'),
+(49, 58, 'Question one', '2020-06-10 16:17:10'),
+(50, 58, 'Question two', '2020-06-10 16:17:10'),
+(51, 58, 'Question three', '2020-06-10 16:17:10'),
+(52, 58, 'Question four', '2020-06-10 16:17:11'),
+(53, 58, 'Question five', '2020-06-10 16:17:11'),
+(54, 59, 'qn 1', '2020-06-29 07:16:42'),
+(55, 59, 'qn 2', '2020-06-29 07:16:42'),
+(56, 59, 'qn 3', '2020-06-29 07:16:42'),
+(57, 59, 'qn 4', '2020-06-29 07:16:42'),
+(58, 59, 'qn 5', '2020-06-29 07:16:42');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `responses`
+--
+
+CREATE TABLE `responses` (
+  `res_id` int NOT NULL,
+  `candidate_id` int NOT NULL,
+  `exam_id` int NOT NULL,
+  `qn_id` int NOT NULL,
+  `ans_opt` varchar(250) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `responses`
+--
+
+INSERT INTO `responses` (`res_id`, `candidate_id`, `exam_id`, `qn_id`, `ans_opt`, `created_at`) VALUES
+(11, 12, 59, 54, 'a', '2020-06-29 08:51:34'),
+(12, 12, 59, 55, 'a', '2020-06-29 08:51:35'),
+(13, 12, 59, 56, 'a', '2020-06-29 08:51:35'),
+(14, 12, 59, 57, 'a', '2020-06-29 08:51:35'),
+(15, 12, 59, 58, 'a', '2020-06-29 08:51:35');
 
 -- --------------------------------------------------------
 
@@ -189,13 +214,13 @@ INSERT INTO `questions` (`qn_id`, `exam_id`, `qn_name`, `created_at`) VALUES
 --
 
 CREATE TABLE `users` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `username` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` bigint UNSIGNED NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `username` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `is_admin` tinyint(1) NOT NULL DEFAULT '0',
-  `cat_id` int(11) DEFAULT NULL,
-  `exam_id` int(11) DEFAULT NULL,
-  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cat_id` int DEFAULT NULL,
+  `exam_id` int DEFAULT NULL,
+  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -206,11 +231,7 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `name`, `username`, `is_admin`, `cat_id`, `exam_id`, `password`, `created_at`, `updated_at`) VALUES
 (1, 'Admin', 'admin', 1, 1, NULL, '$2y$10$CTOc2vZuqmlngwnOu5HaKuAexDGt0gr4iXLntKopvZ16MfeXJxNEe', '2020-04-25 10:20:29', '2020-04-25 10:20:29'),
-(4, 'Hari', 'hari', 0, 1, NULL, '$2y$10$ENs..76eFHbHZO..3BQd2.hXHean59Pp05r8tQVXPjcH19JieLPZm', '2020-04-25 18:01:12', NULL),
-(5, 'ghghgh', 'dfgdfgdfg', 0, 2, NULL, '$2y$10$ZZnSu3XHjVcHU.zDkvB5R.Qfsow938H9hseL/yCZ/L.tCZbJnBRR2', '2020-04-26 04:43:09', NULL),
-(7, 'dfgdfg', 'dfgdg', 0, 2, NULL, '$2y$10$Tl9ZtS81MtFjwAF4CWMkOOKr2OpXfoBvfy7ufV.q58Muh6UdSpUam', '2020-04-26 08:03:24', NULL),
-(8, 'xfbbfbfd', 'dfgdfgd', 0, NULL, NULL, '$2y$10$buGW4GQq8d5EDETDQa1UuOm1YoJ2dDouedyCApyV3lMQ4wi5AVyfS', '2020-04-26 08:04:35', NULL),
-(9, 'aaaa', 'sdfgdfg', 0, NULL, NULL, '$2y$10$QnatAwvYsl9Bh0R4Jf287O1YKCd672WZhUmrjdGnhi/90N1B60RfW', '2020-04-26 08:51:15', NULL);
+(12, 'syama', 'syama', 0, 1, NULL, '$2y$10$cGpbezVYHNLgq5yYal3tzuqL1Ihy/IyVJwbXVOXEI94XyHAA1EaYi', '2020-06-29 07:14:48', NULL);
 
 --
 -- Indexes for dumped tables
@@ -235,28 +256,16 @@ ALTER TABLE `exam_master`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `failed_jobs`
---
-ALTER TABLE `failed_jobs`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `migrations`
---
-ALTER TABLE `migrations`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `password_resets`
---
-ALTER TABLE `password_resets`
-  ADD KEY `password_resets_email_index` (`email`);
-
---
 -- Indexes for table `questions`
 --
 ALTER TABLE `questions`
   ADD PRIMARY KEY (`qn_id`);
+
+--
+-- Indexes for table `responses`
+--
+ALTER TABLE `responses`
+  ADD PRIMARY KEY (`res_id`);
 
 --
 -- Indexes for table `users`
@@ -272,37 +281,39 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `answers`
 --
 ALTER TABLE `answers`
-  MODIFY `ans_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `ans_id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
+
 --
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `cat_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `cat_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
 --
 -- AUTO_INCREMENT for table `exam_master`
 --
 ALTER TABLE `exam_master`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
---
--- AUTO_INCREMENT for table `failed_jobs`
---
-ALTER TABLE `failed_jobs`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `migrations`
---
-ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
+
 --
 -- AUTO_INCREMENT for table `questions`
 --
 ALTER TABLE `questions`
-  MODIFY `qn_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `qn_id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
+
+--
+-- AUTO_INCREMENT for table `responses`
+--
+ALTER TABLE `responses`
+  MODIFY `res_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+COMMIT;
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
