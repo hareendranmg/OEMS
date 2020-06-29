@@ -22,7 +22,7 @@
     </div>
     <div class="small-box bg-success">
         <div class="inner">
-            <h3>44</h3>
+            <h3>{{$active_exams}}</h3>
             <p>Active Exams</p>
         </div>
         <div class="icon">

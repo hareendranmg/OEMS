@@ -208,7 +208,7 @@ return [
     */
 
     'menu' => [
-        // ['header' => 'account_settings'],
+        /************** ADMIN MENU *************************/
         [
             'text'    => 'Candidates',
             'icon'    => 'fas fa-fw fa-user',
@@ -264,6 +264,26 @@ return [
                     'icon'        => 'users',
                 ],
             ],
+        ],
+
+        /************** CANDIDTAE MENU *************************/
+        [
+            'text'    => 'Home',
+            'icon'    => 'fas fa-fw fa-home',
+            'can'         => 'candidate',
+            'url'         => 'candidate'
+        ],
+        [
+            'text'    => 'Active Exams',
+            'icon'    => 'fas fa-fw fa-chart-line',
+            'can'         => 'candidate',
+            'url'         => 'candidate/showexams'
+        ],
+        [
+            'text'    => 'Attended Exams',
+            'icon'    => 'fas fa-fw fa-keyboard',
+            'can'         => 'candidate',
+            'url'         => 'candidate/attended_exams'
         ],
     ],
 

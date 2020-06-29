@@ -4,6 +4,12 @@
 
 @section('content')
 
+@if (\Session::has('exm_msg'))
+    <div class="alert alert-success">
+        {!! \Session::get('exm_msg') !!}
+    </div>
+@endif
+
 <table id="category" class="display" style="width:100%">
     <thead>
         <tr>

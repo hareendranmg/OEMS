@@ -28,12 +28,14 @@ class UserController extends Controller
         {
             return datatables()->of(DB::table('users')
                                     ->join('category', 'category.cat_id', 'users.cat_id')
+                                    ->where('users.is_admin', 0)
                                     // ->select('users.name', 'category.cat_name')
                                     ->get())
                     ->addColumn('action', function($data){
-                        // $button = '<button type="button" name="edit" id="'.$data->id.'" class="edit btn btn-primary btn-sm">Edit</button>';
-                        // $button .= '&nbsp;&nbsp;';
-                        $button = '<button type="button" name="delete" id="'.$data->id.'" class="delete btn btn-danger btn-md">Delete</button>';
+                        $button = '<div class="row justify-content-around">';
+                        // $button .= '<div class="col-5"> <button type="button" name="edit" id="'.$data->id.'" class="edit btn btn-primary btn-block">Edit</button> </div>';
+                        $button .= '<div class="col-5"> <button type="button" name="delete" id="'.$data->id.'" class="delete btn btn-danger btn-block ">Delete</button> </div>';
+                        $button .= '</div>';
                         return $button;
                     })
                     ->rawColumns(['action'])
@@ -42,22 +44,6 @@ class UserController extends Controller
         return view('/admin/showusers');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $name = $request->name;

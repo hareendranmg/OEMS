@@ -73,7 +73,7 @@ class PDFGenerateController extends Controller
                         <td>'.$exam_det->pass_mark.'</td>
                     </tr>
                     <tr>
-                        <th align="left">Cateory</th>
+                        <th align="left">Category</th>
                                 <td>:</td>
                         <td>'.$exam_det->cat_name.'</td>
                     </tr>

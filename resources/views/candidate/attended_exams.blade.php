@@ -17,8 +17,10 @@
         <tr>
             <th>Sl No</th>
             <th>Exam Name</th>
-            <th>Mark</th>
+            <th>Pass Mark</th>
+            <th>Your Mark</th>
             <th>Result</th>
+            <th>Action</th>
         </tr>
     </thead>
 </table>
@@ -45,10 +47,16 @@ function getTable() {
                 data: 'exam_name',
             },
             {
+                data: 'pass_mark',
+            },
+            {
                 data: 'mark',
             },
             {
                 data: 'result',
+            },
+            {
+                data: 'action',
             },
         ],
         fnRowCallback: function(nRow, aData, iDisplayIndex) {
@@ -57,5 +65,6 @@ function getTable() {
         },
     });
 }
+
 </script>
 @stop

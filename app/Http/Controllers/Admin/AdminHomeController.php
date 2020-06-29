@@ -5,6 +5,7 @@ namespace App\Http\Controllers\admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\User;
+use DB;
 
 class AdminHomeController extends Controller
 {
@@ -26,6 +27,9 @@ class AdminHomeController extends Controller
     public function index()
     {
         $userCount = User::where('is_admin',0)->count();
-        return view('/admin/home', compact('userCount'));
+        $active_exams = DB::table('exam_master')
+                        ->where('is_active', 1)
+                        ->count();
+        return view('/admin/home', compact('userCount', 'active_exams'));
     }
 }
