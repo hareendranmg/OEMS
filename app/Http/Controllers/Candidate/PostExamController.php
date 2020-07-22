@@ -90,7 +90,6 @@ class PostExamController extends Controller
                 ]);
             }
 
-            // Debugbar::info($cand_res_det);
 
             return datatables()->of($cand_res_det)->make();
         }
