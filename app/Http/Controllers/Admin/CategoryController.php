@@ -3,9 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Models\User;
 use DB;
-use App\User;
+use Illuminate\Http\Request;
+
 class CategoryController extends Controller
 {
     /**
@@ -15,28 +16,30 @@ class CategoryController extends Controller
      */
     public function index()
     {
-       return view('/admin/addcategory');
+        return view('/admin/addcategory');
     }
 
     public function showCategory()
     {
-        if(request()->ajax())
-        {
+        if (request()->ajax()) {
             return datatables()->of(DB::table('category')->get())
-                    ->addColumn('count', function($data){
+                    ->addColumn('count', function ($data) {
                         $count = DB::table('users')->where('cat_id', $data->cat_id)->count();
+
                         return $count;
                     })
-                    ->addColumn('action', function($data){
+                    ->addColumn('action', function ($data) {
                         $button = '<button type="button" name="showcatcand" id="'.$data->cat_id.'" class="showcatcand btn btn-primary btn-md">View Candidates</button>';
                         $button .= '&nbsp;&nbsp;';
                         $button .= '<button type="button" name="add" id="'.$data->cat_id.'" class="add btn btn-success btn-md">Add Candidates</button>';
+
                         return $button;
                     })
-                    ->rawColumns(['count','action'])
+                    ->rawColumns(['count', 'action'])
                     ->make(true);
         }
         $candidates = User::get();
+
         return view('/admin/showcategory', compact('candidates'));
     }
 
@@ -62,6 +65,7 @@ class CategoryController extends Controller
 
         $user = DB::table('category')
                 ->insert(['cat_name' => $name]);
+
         return view('/admin/addcategory')->withErrors(['created' => 'Category created successfully.']);
     }
 
@@ -73,6 +77,7 @@ class CategoryController extends Controller
         $user = DB::table('users')
                   ->where('id', $candidate_id)
                   ->update(['cat_id' => $cat_id]);
+
         return view('/admin/showcategory');
     }
 

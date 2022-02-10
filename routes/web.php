@@ -13,7 +13,7 @@
 
 Route::get('/', function () {
     return view('welcome');
-})->middleware('guest');;
+})->middleware('guest');
 
 Auth::routes();
 
@@ -47,7 +47,4 @@ Route::group(['middleware' => ['iscandidate']], function () {
     Route::get('/candidate/attended_exams', 'Candidate\PostExamController@attendedExams');
     Route::get('/candidate/view_result', 'Candidate\PostExamController@viewResult');
     Route::resource('/candidate/pdf_exam_report', 'Candidate\PDFGenerateController');
-
 });
-
-

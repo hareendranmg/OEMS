@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Redirect;
-use Illuminate\Support\Facades\Hash;
+use App\Models\User;
 use DB;
-use App\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Redirect;
 
 class UserController extends Controller
 {
@@ -20,27 +20,30 @@ class UserController extends Controller
     {
         $categories = DB::table('category')
                         ->get();
+
         return view('/admin/adduser', compact('categories'));
     }
+
     public function showUsers()
     {
-        if(request()->ajax())
-        {
+        if (request()->ajax()) {
             return datatables()->of(DB::table('users')
                                     ->join('category', 'category.cat_id', 'users.cat_id')
                                     ->where('users.is_admin', 0)
                                     // ->select('users.name', 'category.cat_name')
                                     ->get())
-                    ->addColumn('action', function($data){
+                    ->addColumn('action', function ($data) {
                         $button = '<div class="row justify-content-around">';
                         // $button .= '<div class="col-5"> <button type="button" name="edit" id="'.$data->id.'" class="edit btn btn-primary btn-block">Edit</button> </div>';
                         $button .= '<div class="col-5"> <button type="button" name="delete" id="'.$data->id.'" class="delete btn btn-danger btn-block ">Delete</button> </div>';
                         $button .= '</div>';
+
                         return $button;
                     })
                     ->rawColumns(['action'])
                     ->make(true);
         }
+
         return view('/admin/showusers');
     }
 
@@ -52,7 +55,7 @@ class UserController extends Controller
         $con_password = $request->con_password;
         $category = $request->category;
 
-        if($con_password != $password) {
+        if ($con_password != $password) {
             return Redirect::back()->withErrors(['password_error' => 'Password must be same.']);
         } else {
             $password = Hash::make($password);
@@ -60,6 +63,7 @@ class UserController extends Controller
                       ->insert(['name' => $name, 'cat_id' => $category, 'username' => $username, 'password' => $password]);
             $categories = DB::table('category')
                         ->get();
+
             return view('/admin/adduser', compact('categories'))->withErrors(['created' => 'Candidate created successfully.']);
         }
     }

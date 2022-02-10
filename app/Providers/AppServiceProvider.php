@@ -28,12 +28,14 @@ class AppServiceProvider extends ServiceProvider
             if ($user->is_admin) {
                 return true;
             }
+
             return false;
         });
         \Gate::define('candidate', function ($user) {
-            if (!$user->is_admin) {
+            if (! $user->is_admin) {
                 return true;
             }
+
             return false;
         });
     }

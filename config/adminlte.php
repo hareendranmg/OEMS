@@ -271,19 +271,19 @@ return [
             'text'    => 'Home',
             'icon'    => 'fas fa-fw fa-home',
             'can'         => 'candidate',
-            'url'         => 'candidate'
+            'url'         => 'candidate',
         ],
         [
             'text'    => 'Active Exams',
             'icon'    => 'fas fa-fw fa-chart-line',
             'can'         => 'candidate',
-            'url'         => 'candidate/showexams'
+            'url'         => 'candidate/showexams',
         ],
         [
             'text'    => 'Attended Exams',
             'icon'    => 'fas fa-fw fa-keyboard',
             'can'         => 'candidate',
-            'url'         => 'candidate/attended_exams'
+            'url'         => 'candidate/attended_exams',
         ],
     ],
 
