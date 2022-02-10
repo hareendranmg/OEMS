@@ -14,9 +14,8 @@ class CandidateExamController extends Controller
     public function index(Request $request)
     {
         if (request()->ajax()) {
-
-            date_default_timezone_set("Asia/Kolkata");
-            $cur_date = date("Y-m-d H:i:s");
+            date_default_timezone_set('Asia/Kolkata');
+            $cur_date = date('Y-m-d H:i:s');
             $cat_id = Auth::user()->cat_id;
 
             return datatables()->of(DB::table('exam_master')
@@ -26,13 +25,15 @@ class CandidateExamController extends Controller
                     ->where('exam_end_time', '>=', $cur_date)
                     ->get())
                 ->addColumn('action', function ($data) {
-                    $url = URL::to('candidate/takeexam?exam_id=' . Crypt::encrypt($data->id));
-                    $button = '<a id="' . Crypt::encrypt($data->id) . '" class="attend btn btn-primary col" href="' . $url . '">Attend</a>';
+                    $url = URL::to('candidate/takeexam?exam_id='.Crypt::encrypt($data->id));
+                    $button = '<a id="'.Crypt::encrypt($data->id).'" class="attend btn btn-primary col" href="'.$url.'">Attend</a>';
+
                     return $button;
                 })
                 ->rawColumns(['action'])
                 ->make(true);
         }
+
         return view('/candidate/showexams');
     }
 
@@ -47,7 +48,6 @@ class CandidateExamController extends Controller
             ->value('candidate_id');
 
         if ($isAttended == null) {
-
             $questions = DB::table('questions')
                 ->where('exam_id', $exam_id)
                 ->get();
@@ -100,6 +100,7 @@ class CandidateExamController extends Controller
                 ]);
         }
         $status = 'success';
+
         return view('candidate/attended_exams', compact('status'));
     }
 }

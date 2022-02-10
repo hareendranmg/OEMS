@@ -20,6 +20,7 @@ class ExamController extends Controller
     {
         $categories = DB::table('category')
             ->get();
+
         return view('/admin/createexam', compact('categories'));
     }
 
@@ -30,13 +31,15 @@ class ExamController extends Controller
                     ->join('category', 'category.cat_id', 'exam_master.category')
                     ->get())
                 ->addColumn('action', function ($data) {
-                    $url = URL::to('admin/edit_exam?exam_id=' . Crypt::encrypt($data->id));
-                    $button = '<a id="' . Crypt::encrypt($data->id) . '" href=' . $url . ' class="view btn btn-primary btn-md pl-4 pr-4">Edit Exam</a>';
+                    $url = URL::to('admin/edit_exam?exam_id='.Crypt::encrypt($data->id));
+                    $button = '<a id="'.Crypt::encrypt($data->id).'" href='.$url.' class="view btn btn-primary btn-md pl-4 pr-4">Edit Exam</a>';
+
                     return $button;
                 })
                 ->rawColumns(['action'])
                 ->make(true);
         }
+
         return view('/admin/showexams');
     }
 
@@ -66,6 +69,7 @@ class ExamController extends Controller
                         'pass_mark' => $passmark,
                         'category' => $category,
                     ]);
+
                 return $ifExist;
             } else {
                 $basicDetailsID = DB::table('exam_master')
@@ -79,6 +83,7 @@ class ExamController extends Controller
                         'pass_mark' => $passmark,
                         'category' => $category,
                     ]);
+
                 return $basicDetailsID;
             }
         }
@@ -119,7 +124,8 @@ class ExamController extends Controller
             $createExam = DB::table('exam_master')
                 ->where('id', $exam_id)
                 ->update(['is_active' => 1]);
-            return ($createExam);
+
+            return $createExam;
         }
     }
 
@@ -142,7 +148,6 @@ class ExamController extends Controller
             ->get();
 
         return view('admin.edit_exam', compact('exam_det', 'qn_det', 'categories'));
-
     }
 
     public function finishedExams(Request $request)
@@ -158,8 +163,9 @@ class ExamController extends Controller
                     ->whereIn('exam_master.id', $exam_ids)
                     ->get())
                 ->addColumn('action', function ($data) {
-                    $url = URL::to('admin/finished_exam?exam_id=' . Crypt::encrypt($data->id));
-                    $button = '<a id="' . Crypt::encrypt($data->id) . '" href=' . $url . ' class="view btn btn-primary btn-md pl-4 pr-4">View Result</a>';
+                    $url = URL::to('admin/finished_exam?exam_id='.Crypt::encrypt($data->id));
+                    $button = '<a id="'.Crypt::encrypt($data->id).'" href='.$url.' class="view btn btn-primary btn-md pl-4 pr-4">View Result</a>';
+
                     return $button;
                 })
                 ->rawColumns(['action'])
@@ -196,6 +202,7 @@ class ExamController extends Controller
     {
         if (request()->ajax()) {
             $cand_res_det = $this->getCandResult($request);
+
             return datatables()->of($cand_res_det)->make();
             // ->addColumn('action', function ($data) {
             //     // $url = URL::to('admin/finished_exam?exam_id=' . Crypt::encrypt($data->id));
@@ -208,10 +215,11 @@ class ExamController extends Controller
         }
     }
 
-    public function getCandResult(Request $request, $exam_id=null)
+    public function getCandResult(Request $request, $exam_id = null)
     {
-        if($exam_id == null)
+        if ($exam_id == null) {
             $exam_id = $request->exam_id;
+        }
         $ans_det_arr = [];
         $cand_res_det = new Collection;
 

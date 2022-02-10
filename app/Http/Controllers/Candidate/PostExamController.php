@@ -86,13 +86,13 @@ class PostExamController extends Controller
                     'wrong_mark' => $wrong_mark,
                     'mark' => $mark,
                     'result' => $result,
-                    'action' => '<a class="btn btn-primary" target="_blank" href="pdf_exam_report?exam_id=' . Crypt::encrypt($attmted_exam->exam_id) . '">Exam Report</a>',
+                    'action' => '<a class="btn btn-primary" target="_blank" href="pdf_exam_report?exam_id='.Crypt::encrypt($attmted_exam->exam_id).'">Exam Report</a>',
                 ]);
             }
 
-
             return datatables()->of($cand_res_det)->make();
         }
+
         return view('candidate.attended_exams');
     }
 }

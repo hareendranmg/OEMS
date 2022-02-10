@@ -14,7 +14,6 @@ class PDFGenerateController extends Controller
 {
     public function index(Request $request)
     {
-
         $exam_id = Crypt::decrypt($request->exam_id);
 
         $cand_id = Auth::user()->id;
@@ -48,8 +47,8 @@ class PDFGenerateController extends Controller
             ->where('candidate_id', $cand_id)
             ->select('candidate_id', 'qn_id', 'ans_opt')
             ->get();
-            $cand_ans_det = json_decode(json_encode($cand_ans_det), true);
-            // dd($cand_ans_det[0]['ans_opt']);
+        $cand_ans_det = json_decode(json_encode($cand_ans_det), true);
+        // dd($cand_ans_det[0]['ans_opt']);
         $correct_ans = 0;
 
         foreach ($correct_ans_det as $key => $crct_ans) {
@@ -65,74 +64,74 @@ class PDFGenerateController extends Controller
         $mark = ($correct_ans * $right_mark) - ($wrong_ans * $wrong_mark);
         $result = ($mark >= $pass_mark) ? 'Passed' : 'Failed';
 
-        $html = '<h1 align="center"> <u>' . $exam_det->exam_name . ' Result Report</u> </h1>
+        $html = '<h1 align="center"> <u>'.$exam_det->exam_name.' Result Report</u> </h1>
                 <table border="0" align="center">
                     <tr>
                         <th align="left">Exam Name</th>
                         <td>:</td>
-                        <td>' . $exam_det->exam_name . '</td>
+                        <td>'.$exam_det->exam_name.'</td>
                     </tr>
                     <tr>
                         <th align="left">Candidates Name</th>
                         <td>:</td>
-                        <td>' . $candidate_name . '</td>
+                        <td>'.$candidate_name.'</td>
                     </tr>
                     <tr>
                         <th align="left">Category</th>
                                 <td>:</td>
-                        <td>' . $exam_det->cat_name . '</td>
+                        <td>'.$exam_det->cat_name.'</td>
                     </tr>
                     <tr>
                         <th align="left">Exam start time</th>
                         <td>:</td>
-                        <td>' . $exam_det->exam_start_time . '</td>
+                        <td>'.$exam_det->exam_start_time.'</td>
                     </tr>
                     <tr>
                         <th align="left">Exam end time</th>
                         <td>:</td>
-                        <td>' . $exam_det->exam_end_time . '</td>
+                        <td>'.$exam_det->exam_end_time.'</td>
                     </tr>
                     <tr>
                         <th align="left">Total Questions</th>
                         <td>:</td>
-                        <td>' . $exam_det->total_questions . '</td>
+                        <td>'.$exam_det->total_questions.'</td>
                     </tr>
                     <tr>
                         <th align="left">Mark for correct answer</th>
                         <td>:</td>
-                        <td>' . $exam_det->right_mark . '</td>
+                        <td>'.$exam_det->right_mark.'</td>
                     </tr>
                     <tr>
                         <th align="left">Mark for wrong answer</th>
                         <td>:</td>
-                        <td>' . $exam_det->wrong_mark . '</td>
+                        <td>'.$exam_det->wrong_mark.'</td>
                     </tr>
                     <tr>
                         <th align="left">Mark for pass exam</th>
                         <td>:</td>
-                        <td>' . $exam_det->pass_mark . '</td>
+                        <td>'.$exam_det->pass_mark.'</td>
                     </tr>
                     <br />
                     <br />
                     <tr>
                         <th align="left">Correct answers</th>
                         <td>:</td>
-                        <td>' . $correct_ans . '</td>
+                        <td>'.$correct_ans.'</td>
                     </tr>
                     <tr>
                         <th align="left">Wrong answers</th>
                         <td>:</td>
-                        <td>' . $wrong_ans . '</td>
+                        <td>'.$wrong_ans.'</td>
                     </tr>
                     <tr>
                         <th align="left">Mark obtained</th>
                         <td>:</td>
-                        <td>' . $mark . '</td>
+                        <td>'.$mark.'</td>
                     </tr>
                     <tr>
                         <th align="left">Result</th>
                         <td>:</td>
-                        <td>' . $result . '</td>
+                        <td>'.$result.'</td>
                     </tr>
                 </table>
                 <h2 align="center"><u>Question and Answers</u></h2>';
@@ -166,40 +165,40 @@ class PDFGenerateController extends Controller
         // dd($qnrs);
 
         foreach ($qnrs as $qnr) {
-
             $html .= '<table align="center" width="100%" border="1" style="border-collapse: collapse;">
                         <tr>
                             <th width="30%">Question No</th>
-                            <td width="70%" style="padding-left: 10px;">' . $qnr['qn_no'] . '</td>
+                            <td width="70%" style="padding-left: 10px;">'.$qnr['qn_no'].'</td>
                         </tr>
                         <tr>
                             <th width="30%">Question</th>
-                            <td width="70%" style="padding-left: 10px;">' . $qnr['qn']->qn_name . '</td>
+                            <td width="70%" style="padding-left: 10px;">'.$qnr['qn']->qn_name.'</td>
                         </tr>
                         <tr>
                             <th width="30%" rowspan="4">Options</th>
-                            <td width="70%" style="padding-left: 10px;">' . $qnr['ans']->opt_a . '</td>
+                            <td width="70%" style="padding-left: 10px;">'.$qnr['ans']->opt_a.'</td>
                         </tr>
                         <tr>
-                            <td width="70%" style="padding-left: 10px;">' . $qnr['ans']->opt_b . '</td>
+                            <td width="70%" style="padding-left: 10px;">'.$qnr['ans']->opt_b.'</td>
                         </tr>
                         <tr>
-                            <td width="70%" style="padding-left: 10px;">' . $qnr['ans']->opt_c . '</td>
+                            <td width="70%" style="padding-left: 10px;">'.$qnr['ans']->opt_c.'</td>
                         </tr>
                         <tr>
-                            <td width="70%" style="padding-left: 10px;">' . $qnr['ans']->opt_d . '</td>
+                            <td width="70%" style="padding-left: 10px;">'.$qnr['ans']->opt_d.'</td>
                         </tr>
                         <tr>
                             <th width="30%">Correct Answer</th>
-                            <td width="70%" style="padding-left: 10px;"> Option ' . $qnr['ans']->correct_ans . '</td>
+                            <td width="70%" style="padding-left: 10px;"> Option '.$qnr['ans']->correct_ans.'</td>
                         </tr>
                         <tr>
                             <th width="30%">Your Answer</th>
-                            <td width="70%" style="padding-left: 10px;"> Option ' . $qnr['res']->ans_opt . '</td>
+                            <td width="70%" style="padding-left: 10px;"> Option '.$qnr['res']->ans_opt.'</td>
                         </tr>
                     </table> <br />';
         }
         $pdf = PDF::loadHTML($html);
+
         return $pdf->stream();
     }
 }

@@ -2,18 +2,17 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use App\Http\Controllers\Admin\ExamController;
+use App\Http\Controllers\Controller;
+use Crypt;
 use DB;
 use Illuminate\Http\Request;
 use PDF;
-use Crypt;
 
 class PDFGenerateController extends Controller
 {
     public function index(Request $request)
     {
-
         $exam_id = Crypt::decrypt($request->exam_id);
         $exam_det = DB::table('exam_master')
             ->join('category', 'category.cat_id', 'exam_master.category')
@@ -32,7 +31,7 @@ class PDFGenerateController extends Controller
             ->distinct('responses.candidate_id')
             ->count();
 
-        $exam_cntrl = new ExamController(); 
+        $exam_cntrl = new ExamController();
         $cand_res_det = $exam_cntrl->getCandResult($request, $exam_id);
 
         $html = '<h1 align="center"> <u>'.$exam_det->exam_name.' Result Report</u> </h1>
@@ -96,16 +95,17 @@ class PDFGenerateController extends Controller
                         <th width="25%">Mark</th>
                         <th width="25%">Result</th>
                     </tr>';
-                foreach ($cand_res_det as $det) {
-                    $html.='<tr>
-                        <td width="15%" align="center">'.$det["no"].'</td>
-                        <td width="35%" align="center">'.$det["name"].'</td>
-                        <td width="25%" align="center">'.$det["mark"].'</td>
-                        <td width="25%" align="center">'.$det["result"].'</td>
+        foreach ($cand_res_det as $det) {
+            $html .= '<tr>
+                        <td width="15%" align="center">'.$det['no'].'</td>
+                        <td width="35%" align="center">'.$det['name'].'</td>
+                        <td width="25%" align="center">'.$det['mark'].'</td>
+                        <td width="25%" align="center">'.$det['result'].'</td>
                     </tr>';
-                }
-                $html.='</table>';
+        }
+        $html .= '</table>';
         $pdf = PDF::loadHTML($html);
+
         return $pdf->stream();
     }
 }

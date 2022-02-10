@@ -25,8 +25,8 @@ class CandidateHomeController extends Controller
      */
     public function index()
     {
-        date_default_timezone_set("Asia/Kolkata");
-        $cur_date = date("Y-m-d H:i:s");
+        date_default_timezone_set('Asia/Kolkata');
+        $cur_date = date('Y-m-d H:i:s');
         $cat_id = Auth::user()->cat_id;
         $active_exams = DB::table('exam_master')
             ->where('category', $cat_id)

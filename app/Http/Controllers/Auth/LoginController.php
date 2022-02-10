@@ -35,12 +35,11 @@ class LoginController extends Controller
     // protected $redirectTo = RouteServiceProvider::HOME;
     protected function authenticated(Request $request, $user)
     {
-        if( $user->is_admin ) {
+        if ($user->is_admin) {
             return redirect('admin');
         } else {
             return redirect('candidate');
         }
-            
     }
 
     /**
